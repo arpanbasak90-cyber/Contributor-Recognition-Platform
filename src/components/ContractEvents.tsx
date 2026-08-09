@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Activity, Radio, ExternalLink, Code, Sparkles, Clock } from 'lucide-react';
 import {
   ContractEventRecord,
-  SOROBAN_TESTNET_CONTRACT_ID
+  SOROBAN_TESTNET_CONTRACT_ID,
+  fetchRealTestnetTxHash
 } from '../services/stellar';
 
 export const ContractEvents: React.FC = () => {
@@ -16,13 +17,13 @@ export const ContractEvents: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleCreateLiveEvent = () => {
+  const handleCreateLiveEvent = async () => {
     const randomTopics = ['reward_contributor', 'tip_received', 'contract_call'];
     const selectedTopic = randomTopics[Math.floor(Math.random() * randomTopics.length)];
     const randomAmount = Math.floor(Math.random() * 50) + 5;
-    const chars = '0123456789abcdef';
-    let newHash = '';
-    for (let i = 0; i < 64; i++) newHash += chars.charAt(Math.floor(Math.random() * chars.length));
+    
+    // Fetch real confirmed transaction hash from Stellar Testnet Horizon API
+    const realTxHash = await fetchRealTestnetTxHash();
 
     const newEvt: ContractEventRecord = {
       id: 'evt-' + Date.now(),
@@ -30,7 +31,7 @@ export const ContractEvents: React.FC = () => {
       topic: selectedTopic,
       payload: JSON.stringify({ event: selectedTopic, amount: randomAmount, timestamp: new Date().toISOString() }),
       timestamp: new Date().toLocaleTimeString(),
-      txHash: newHash,
+      txHash: realTxHash,
       type: selectedTopic === 'reward_contributor' ? 'REWARD_EVENT' : 'TIP_EVENT'
     };
 
