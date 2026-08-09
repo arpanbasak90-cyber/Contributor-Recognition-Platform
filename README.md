@@ -27,35 +27,39 @@
 ### 1. Wallet Gate Landing Screen
 > Initial landing gate requiring users to connect a Stellar wallet (Freighter, Albedo, xBull, Rabet) before entering the application dashboard.
 
-![Wallet Gate Landing Screen](./docs/screenshots/1_wallet_gate.png)
+<img width="1352" height="630" alt="new 1" src="https://github.com/user-attachments/assets/c8b4dde8-71f9-4938-b5a2-008325a8763b" />
 
 ---
 
 ### 2. Connected Wallet & Live Dashboard
 > Wallet connected state displaying the active public key, network selector (Testnet, Mainnet, Localhost), real-time Horizon XLM balance, and Friendbot Testnet Faucet trigger.
 
-![Connected Wallet & Live Dashboard](./docs/screenshots/2_wallet_connected.png)
+<img width="1365" height="641" alt="new 2" src="https://github.com/user-attachments/assets/c00071c0-ae73-4b0b-aa84-c55901c421fa" />
+
 
 ---
 
 ### 3. Contributor Leaderboard & Soroban Reward Suite
 > Dynamic contributor leaderboard allowing users to register team members, select contributors, and execute on-chain XLM tips & Soroban smart contract calls.
 
-![Contributor Leaderboard & Soroban Reward Suite](./docs/screenshots/3_contributor_leaderboard.png)
+<img width="1124" height="643" alt="new 3" src="https://github.com/user-attachments/assets/8024feb7-4d3e-4fe6-9d0a-0327078b9a09" />
+
 
 ---
 
 ### 4. Confirmed Soroban Contract Transaction Result
 > Confirmed Soroban smart contract reward execution displaying the 64-character transaction hash, transacted XLM amount, contract address, and direct link to Stellar Expert Explorer.
 
-![Confirmed Soroban Contract Transaction Result](./docs/screenshots/4_transaction_result.png)
+<img width="1240" height="640" alt="new 4" src="https://github.com/user-attachments/assets/c36f9654-ab9b-4a30-917c-c21170e36705" />
+
 
 ---
 
 ### 5. On-Chain Ledger Verification on Stellar Expert Explorer
 > Live confirmed transaction record on Stellar Expert Testnet (`7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0`) showing successful Soroban contract invocation and transaction signature.
 
-![Stellar Expert Explorer On-Chain Verification](./docs/screenshots/5_stellar_expert_verification.png)
+<img width="1363" height="640" alt="new 5" src="https://github.com/user-attachments/assets/17e5a75f-df83-4f72-a5d7-acc3263e58a1" />
+
 
 ---
 
