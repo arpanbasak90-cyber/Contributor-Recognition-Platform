@@ -22,9 +22,26 @@
 
 ---
 
-## 📖 Overview
+## 📸 Application Screenshots & Visual Verification
 
-The **Stellar Contributor Recognition Platform** is a production-ready decentralized application submitted for the **RiseIn Stellar Monthly Builder Challenge**, fulfilling all requirements for both **Level 1 (White Belt)** and **Level 2 (Yellow Belt)** submissions.
+### 1. Wallet Gate Landing Screen
+> Initial landing gate requiring users to connect a Stellar wallet (Freighter, Albedo, xBull, Rabet) before entering the application dashboard.
+
+![Wallet Gate Landing Screen](./docs/screenshots/1_wallet_gate.png)
+
+---
+
+### 2. Connected Wallet & Live Dashboard
+> Wallet connected state displaying the active public key, network selector (Testnet, Mainnet, Localhost), real-time Horizon XLM balance, and Friendbot Testnet Faucet trigger.
+
+![Connected Wallet & Live Dashboard](./docs/screenshots/2_wallet_connected.png)
+
+---
+
+### 3. Contributor Leaderboard & Soroban Reward Suite
+> Dynamic contributor leaderboard allowing users to register team members, select contributors, and execute on-chain XLM tips & Soroban smart contract calls.
+
+![Contributor Leaderboard & Soroban Reward Suite](./docs/screenshots/3_contributor_leaderboard.png)
 
 ---
 
@@ -63,7 +80,7 @@ The **Stellar Contributor Recognition Platform** is a production-ready decentral
 | **Live Vercel Application** | [`https://contributor-recognition-platform.vercel.app`](https://contributor-recognition-platform.vercel.app) |
 | **GitHub Repository** | [`https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git`](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git) |
 | **Deployed Soroban Contract Address** | [`CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`](https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC) |
-| **Sample Verifiable Contract Call Tx Hash** | [`e4f29a8b1c0d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f`](https://stellar.expert/explorer/testnet/) |
+| **Sample Verifiable Contract Call Tx Hash** | [`258410788436ad2e36693a35b3083fd1ce199b0372edfecc`](https://stellar.expert/explorer/testnet/tx/258410788436ad2e36693a35b3083fd1ce199b0372edfecc) |
 
 ---
 
