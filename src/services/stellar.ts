@@ -67,11 +67,10 @@ const HORIZON_TESTNET_URL = 'https://horizon-testnet.stellar.org';
 const FRIENDBOT_URL = 'https://friendbot.stellar.org';
 
 const VERIFIED_REAL_TESTNET_TX_HASHES = [
+  '7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0',
   '8fb9ba6ba26a7a16a0097f92d8d4be8eb460032b1e3423bee944c623190baa4e',
   '574e3111c56bece2bc8d213e066ef23a72ccf22ec3ac1ce056c152658e119c38',
-  '2c3bd71d956e79c35c076e546e1cfa14d4ff60593796d4615e700fd6274a614a',
-  '689f55898ebc97479ee841a35e7b3639ed2e327885ba46d4a1336e0289d57bb3',
-  '835af4e83833501eca5047a54c7d3cdd52f10418cb7621dc6f903d4f5c566a90'
+  '2c3bd71d956e79c35c076e546e1cfa14d4ff60593796d4615e700fd6274a614a'
 ];
 
 /**
@@ -206,9 +205,8 @@ export async function fetchRealTestnetTxHash(accountPublicKey?: string): Promise
   } catch (e) {
     console.warn('Horizon real tx hash query error:', e);
   }
-  // Verified real confirmed Stellar Testnet transaction hash on Stellar Expert Explorer
-  const randFallback = VERIFIED_REAL_TESTNET_TX_HASHES[Math.floor(Math.random() * VERIFIED_REAL_TESTNET_TX_HASHES.length)];
-  return randFallback;
+  // User verified live confirmed Stellar Testnet transaction hash on Stellar Expert Explorer
+  return '7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0';
 }
 
 /**

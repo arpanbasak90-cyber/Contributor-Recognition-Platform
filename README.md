@@ -52,6 +52,13 @@
 
 ---
 
+### 5. On-Chain Ledger Verification on Stellar Expert Explorer
+> Live confirmed transaction record on Stellar Expert Testnet (`7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0`) showing successful Soroban contract invocation and transaction signature.
+
+![Stellar Expert Explorer On-Chain Verification](./docs/screenshots/5_stellar_expert_verification.png)
+
+---
+
 ## 📋 Level 1 - White Belt Submission Checklist
 
 | Level 1 Requirement | Feature / Implementation Details | Status |
@@ -87,7 +94,7 @@
 | **Live Vercel Application** | [`https://contributor-recognition-platform.vercel.app`](https://contributor-recognition-platform.vercel.app) |
 | **GitHub Repository** | [`https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git`](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git) |
 | **Deployed Soroban Contract Address** | [`CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`](https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC) |
-| **Sample Verifiable Contract Call Tx Hash** | [`8fb9ba6ba26a7a16a0097f92d8d4be8eb460032b1e3423bee944c623190baa4e`](https://stellar.expert/explorer/testnet/tx/8fb9ba6ba26a7a16a0097f92d8d4be8eb460032b1e3423bee944c623190baa4e) |
+| **Live Confirmed Contract Call Tx Hash** | [`7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0`](https://stellar.expert/explorer/testnet/tx/7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0) |
 
 ---
 
