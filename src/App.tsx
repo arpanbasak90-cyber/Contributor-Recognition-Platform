@@ -157,7 +157,7 @@ export const App: React.FC = () => {
             <div className="alert-box alert-info" style={{ marginBottom: '1.5rem' }}>
               <Info size={20} style={{ flexShrink: 0 }} />
               <div>
-                <strong>Active Network ({network.toUpperCase()}):</strong> Stellar REST APIs, Soroban Smart Contracts, live balance fetching, and real-time transaction event logging.
+                <strong>Connected to {network.toUpperCase()}:</strong> Accessing Stellar REST APIs, Soroban Smart Contracts, live balance fetching, and real-time transaction logging.
               </div>
             </div>
 
@@ -245,7 +245,7 @@ export const App: React.FC = () => {
       }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            Built for <strong>Stellar Monthly Builder Challenge</strong> • Level 1 & Level 2 Submission
+            Built on <strong>Stellar Blockchain</strong> • Open Source Contributor Platform
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
             Powered by <Sparkles size={14} color="var(--primary)" /> <strong>Soroban Smart Contracts & Stellar API</strong>

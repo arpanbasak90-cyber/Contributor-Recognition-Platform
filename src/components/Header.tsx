@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wallet, LogOut, Sparkles, RefreshCw, Layers, Sun, Moon, ChevronDown, Globe } from 'lucide-react';
+import { Wallet, LogOut, RefreshCw, Layers, Sun, Moon, ChevronDown, Globe, Compass } from 'lucide-react';
 import { WalletState, NetworkId } from '../services/stellar';
 
 interface HeaderProps {
@@ -30,10 +30,10 @@ export const Header: React.FC<HeaderProps> = ({
 
   const getProviderName = (providerId: string | null) => {
     switch (providerId) {
-      case 'freighter': return 'Freighter 🚀';
-      case 'albedo': return 'Albedo 🌌';
-      case 'xbull': return 'xBull 🐂';
-      case 'rabet': return 'Rabet 🐇';
+      case 'freighter': return 'Freighter';
+      case 'albedo': return 'Albedo';
+      case 'xbull': return 'xBull';
+      case 'rabet': return 'Rabet';
       default: return 'Stellar Wallet';
     }
   };
@@ -50,28 +50,26 @@ export const Header: React.FC<HeaderProps> = ({
     }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         {/* Brand Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
           <div style={{
-            width: '38px',
-            height: '38px',
-            borderRadius: '10px',
-            background: 'var(--primary)',
+            width: '40px',
+            height: '40px',
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, #7C3AED 0%, #0284C7 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: 'var(--shadow-main)'
+            boxShadow: 'var(--shadow-main)',
+            color: '#FFFFFF'
           }}>
-            <Sparkles size={20} color="#FFF" />
+            <Compass size={22} color="#FFFFFF" />
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h1 style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
-                Stellar Recognizer
-              </h1>
-              <span className="badge badge-purple">Level 1 & 2</span>
-            </div>
+            <h1 style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-main)', lineHeight: '1.2' }}>
+              Stellar Recognizer
+            </h1>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              Contributor Recognition & Rewards Platform
+              Contributor Recognition & Tipping Platform
             </p>
           </div>
         </div>

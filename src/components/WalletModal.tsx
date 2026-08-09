@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Shield, ArrowRight, AlertTriangle, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { X, Shield, ArrowRight, AlertTriangle, ExternalLink } from 'lucide-react';
 import {
   WalletProviderInfo,
   WalletProviderId,
@@ -82,17 +82,16 @@ export const WalletModal: React.FC<WalletModalProps> = ({
       padding: '1rem'
     }}>
       <div className="glass-panel animate-slide-up" style={{
-        maxWidth: '480px',
+        maxWidth: '460px',
         width: '100%',
         padding: '1.75rem',
-        border: '1px solid var(--border-glow)',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.8)'
+        boxShadow: 'var(--shadow-main)'
       }}>
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <Shield size={22} color="#8B5CF6" />
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Select Stellar Wallet</h2>
+            <Shield size={22} color="var(--primary)" />
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-main)' }}>Select Stellar Wallet</h2>
           </div>
           <button
             onClick={onClose}
@@ -103,7 +102,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
         </div>
 
         <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.25rem' }}>
-          Choose your preferred Stellar Testnet wallet provider to interact with Soroban Smart Contracts.
+          Choose your preferred Stellar wallet provider to interact with the platform.
         </p>
 
         {/* Error Banner inside Modal */}
@@ -112,7 +111,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
             <AlertTriangle size={18} style={{ flexShrink: 0 }} />
             <div>
               <strong style={{ display: 'block', fontSize: '0.85rem' }}>
-                [{errorInfo.type}] Connection Error
+                Connection Error
               </strong>
               <span style={{ fontSize: '0.8rem' }}>{errorInfo.message}</span>
             </div>
@@ -127,10 +126,10 @@ export const WalletModal: React.FC<WalletModalProps> = ({
               onClick={() => handleSelectProvider(provider.id)}
               disabled={loading}
               style={{
-                background: selectedProvider === provider.id ? 'var(--primary-light)' : 'rgba(10, 14, 23, 0.7)',
-                border: selectedProvider === provider.id ? '1px solid var(--primary)' : '1px solid var(--border-glass)',
+                background: selectedProvider === provider.id ? 'var(--primary-light)' : 'var(--bg-inner-box)',
+                border: selectedProvider === provider.id ? '1px solid var(--primary)' : '1px solid var(--border-color)',
                 borderRadius: 'var(--radius-sm)',
-                padding: '1rem',
+                padding: '0.9rem 1rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -142,19 +141,8 @@ export const WalletModal: React.FC<WalletModalProps> = ({
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
                 <span style={{ fontSize: '1.5rem' }}>{provider.icon}</span>
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>
-                      {provider.name}
-                    </span>
-                    {provider.installed ? (
-                      <span className="badge badge-green" style={{ fontSize: '0.65rem' }}>
-                        <CheckCircle2 size={10} /> Ready
-                      </span>
-                    ) : (
-                      <span className="badge badge-cyan" style={{ fontSize: '0.65rem' }}>
-                        Web / Extension
-                      </span>
-                    )}
+                  <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>
+                    {provider.name}
                   </div>
                   <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
                     {provider.description}
@@ -162,7 +150,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
                 </div>
               </div>
 
-              <ArrowRight size={18} color={selectedProvider === provider.id ? '#C4B5FD' : 'var(--text-dim)'} />
+              <ArrowRight size={18} color={selectedProvider === provider.id ? 'var(--primary)' : 'var(--text-dim)'} />
             </button>
           ))}
         </div>
@@ -174,7 +162,7 @@ export const WalletModal: React.FC<WalletModalProps> = ({
             href="https://www.freighter.app/"
             target="_blank"
             rel="noreferrer"
-            style={{ color: '#06B6D4', textDecoration: 'none' }}
+            style={{ color: 'var(--accent-cyan)', textDecoration: 'none' }}
           >
             Get Freighter Extension <ExternalLink size={11} style={{ display: 'inline' }} />
           </a>
