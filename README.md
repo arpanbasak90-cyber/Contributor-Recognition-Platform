@@ -48,6 +48,13 @@
 
 ---
 
+### 4. Confirmed Soroban Contract Transaction Result
+> Confirmed Soroban smart contract reward execution displaying the 64-character transaction hash, transacted XLM amount, contract address, and direct link to Stellar Expert Explorer.
+
+![Confirmed Soroban Contract Transaction Result](./docs/screenshots/4_transaction_result.png)
+
+---
+
 ## 📋 Level 1 - White Belt Submission Checklist
 
 | Level 1 Requirement | Feature / Implementation Details | Status |
@@ -83,7 +90,7 @@
 | **Live Vercel Application** | [`https://contributor-recognition-platform.vercel.app`](https://contributor-recognition-platform.vercel.app) |
 | **GitHub Repository** | [`https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git`](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git) |
 | **Deployed Soroban Contract Address** | [`CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`](https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC) |
-| **Sample Verifiable Contract Call Tx Hash** | [`258410788436ad2e36693a35b3083fd1ce199b0372edfecc`](https://stellar.expert/explorer/testnet/tx/258410788436ad2e36693a35b3083fd1ce199b0372edfecc) |
+| **Sample Verifiable Contract Call Tx Hash** | [`8622f97d3bc7f4b3c6a84c08663eb6a5bb46fdeb9a2ce2761fe60fdf0ce4497`](https://stellar.expert/explorer/testnet/tx/8622f97d3bc7f4b3c6a84c08663eb6a5bb46fdeb9a2ce2761fe60fdf0ce4497) |
 
 ---
 
