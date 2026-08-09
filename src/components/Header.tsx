@@ -1,9 +1,11 @@
 import React from 'react';
-import { Wallet, LogOut, Sparkles, RefreshCw, Layers, ChevronDown } from 'lucide-react';
+import { Wallet, LogOut, Sparkles, RefreshCw, Layers, Sun, Moon, ChevronDown } from 'lucide-react';
 import { WalletState } from '../services/stellar';
 
 interface HeaderProps {
   walletState: WalletState;
+  theme: 'dark' | 'light';
+  onToggleTheme: () => void;
   onOpenWalletModal: () => void;
   onDisconnect: () => void;
   onRefreshBalance: () => void;
@@ -11,6 +13,8 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   walletState,
+  theme,
+  onToggleTheme,
   onOpenWalletModal,
   onDisconnect,
   onRefreshBalance
@@ -32,66 +36,75 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header style={{
-      borderBottom: '1px solid var(--border-glass)',
-      background: 'rgba(11, 14, 20, 0.85)',
-      backdropFilter: 'blur(16px)',
+      borderBottom: '1px solid var(--border-color)',
+      background: 'var(--bg-card)',
+      backdropFilter: 'blur(12px)',
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      padding: '1rem 0'
+      padding: '0.85rem 0'
     }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         {/* Brand Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '12px',
-            background: 'linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%)',
+            width: '38px',
+            height: '38px',
+            borderRadius: '10px',
+            background: 'var(--primary)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 20px rgba(139, 92, 246, 0.4)'
+            boxShadow: 'var(--shadow-main)'
           }}>
-            <Sparkles size={22} color="#FFF" />
+            <Sparkles size={20} color="#FFF" />
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h1 style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', background: 'linear-gradient(90deg, #FFF, #C4B5FD)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              <h1 style={{ fontSize: '1.15rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text-main)' }}>
                 Stellar Recognizer
               </h1>
-              <span className="badge badge-gold">Level 2 Yellow Belt</span>
+              <span className="badge badge-purple">Level 1 & 2</span>
             </div>
-            <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              Multi-Wallet & Soroban Smart Contract Platform
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Contributor Recognition & Rewards Platform
             </p>
           </div>
         </div>
 
-        {/* Right Header: Network status & Wallet button */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        {/* Right Header: Theme Toggle, Network status & Wallet button */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          {/* Theme Toggle Button */}
+          <button
+            onClick={onToggleTheme}
+            className="btn btn-secondary"
+            style={{ padding: '0.45rem', borderRadius: '50%', minWidth: '36px', height: '36px' }}
+            title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+          >
+            {theme === 'dark' ? <Sun size={17} color="#FDE047" /> : <Moon size={17} color="#475569" />}
+          </button>
+
           {/* Testnet Badge */}
-          <div className="badge badge-cyan">
+          <div className="badge badge-cyan" style={{ fontSize: '0.7rem' }}>
             <span className="pulse-dot"></span>
-            Stellar Testnet
+            Testnet
           </div>
 
           {walletState.connected ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
               {/* Balance Badge */}
               <div style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid var(--border-glass)',
-                padding: '0.45rem 0.85rem',
+                background: 'var(--bg-input)',
+                border: '1px solid var(--border-color)',
+                padding: '0.4rem 0.75rem',
                 borderRadius: 'var(--radius-sm)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem',
-                fontSize: '0.85rem'
+                gap: '0.4rem',
+                fontSize: '0.82rem'
               }}>
-                <Layers size={15} color="#06B6D4" />
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>Balance:</span>
-                <span className="font-mono" style={{ fontWeight: 700, color: '#FDE047' }}>
+                <Layers size={14} color="var(--accent-cyan)" />
+                <span className="font-mono" style={{ fontWeight: 700, color: 'var(--accent-gold)' }}>
                   {walletState.balance} XLM
                 </span>
                 <button
@@ -99,37 +112,36 @@ export const Header: React.FC<HeaderProps> = ({
                   title="Refresh Balance"
                   style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
                 >
-                  <RefreshCw size={13} className={walletState.isLoading ? 'spin' : ''} />
+                  <RefreshCw size={12} className={walletState.isLoading ? 'spin' : ''} />
                 </button>
               </div>
 
-              {/* Connected Address & Provider Info */}
+              {/* Connected Address & Provider */}
               <div style={{
                 background: 'var(--primary-light)',
-                border: '1px solid rgba(139, 92, 246, 0.3)',
-                padding: '0.45rem 0.85rem',
+                border: '1px solid rgba(124, 58, 237, 0.25)',
+                padding: '0.4rem 0.75rem',
                 borderRadius: 'var(--radius-sm)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.6rem'
+                gap: '0.5rem'
               }}>
-                <Wallet size={15} color="#C4B5FD" />
+                <Wallet size={14} color="var(--primary)" />
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span className="font-mono" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#FFFFFF' }}>
+                  <span className="font-mono" style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-main)' }}>
                     {formatAddress(walletState.publicKey)}
                   </span>
-                  <span style={{ fontSize: '0.68rem', color: '#06B6D4', fontWeight: 600 }}>
+                  <span style={{ fontSize: '0.65rem', color: 'var(--accent-cyan)', fontWeight: 600 }}>
                     {getProviderName(walletState.provider)}
                   </span>
                 </div>
                 <button
                   onClick={onDisconnect}
                   className="btn btn-danger"
-                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', marginLeft: '0.25rem' }}
+                  style={{ padding: '0.2rem 0.45rem', fontSize: '0.72rem', marginLeft: '0.2rem' }}
                   title="Disconnect Wallet"
                 >
-                  <LogOut size={13} />
-                  Disconnect
+                  <LogOut size={12} />
                 </button>
               </div>
             </div>
@@ -139,9 +151,9 @@ export const Header: React.FC<HeaderProps> = ({
               disabled={walletState.isLoading}
               className="btn btn-primary"
             >
-              <Wallet size={18} />
-              {walletState.isLoading ? 'Connecting...' : 'Connect Wallet (Multi-Wallet)'}
-              <ChevronDown size={14} style={{ marginLeft: '2px' }} />
+              <Wallet size={16} />
+              {walletState.isLoading ? 'Connecting...' : 'Connect Wallet'}
+              <ChevronDown size={13} style={{ marginLeft: '1px' }} />
             </button>
           )}
         </div>

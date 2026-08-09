@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
+import { WalletGate } from './components/WalletGate';
 import { WalletCard } from './components/WalletCard';
 import { WalletModal } from './components/WalletModal';
 import { ContributorList } from './components/ContributorList';
@@ -16,6 +17,7 @@ import {
 import { Award, Send, History, Sparkles, Info, Activity } from 'lucide-react';
 
 export const App: React.FC = () => {
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [walletState, setWalletState] = useState<WalletState>({
     connected: false,
     publicKey: null,
@@ -32,6 +34,15 @@ export const App: React.FC = () => {
   const [selectedRecipient, setSelectedRecipient] = useState<{ name: string; publicKey: string } | null>(null);
   const [activeTab, setActiveTab] = useState<'leaderboard' | 'tip' | 'events' | 'history'>('leaderboard');
 
+  // Handle Light / Dark Theme switching
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   // Load live account transactions when wallet connects
   useEffect(() => {
     async function loadLiveTransactions() {
@@ -47,6 +58,25 @@ export const App: React.FC = () => {
 
   const handleWalletConnected = (newState: WalletState) => {
     setWalletState(newState);
+  };
+
+  const handleDemoConnect = async () => {
+    const demoKey = 'GBRPYHIL2CI3FNLW4HJEX5C2T62S7LXZ4P63V7L7FVRKXZX4S4WV4567';
+    let balance = '10000.0000000';
+    try {
+      balance = await fetchXlmBalance(demoKey);
+    } catch (e) {
+      // fallback
+    }
+    setWalletState({
+      connected: true,
+      publicKey: demoKey,
+      network: 'Stellar Testnet',
+      balance,
+      provider: 'freighter',
+      isLoading: false,
+      error: null
+    });
   };
 
   const handleDisconnect = () => {
@@ -98,6 +128,8 @@ export const App: React.FC = () => {
       {/* Header */}
       <Header
         walletState={walletState}
+        theme={theme}
+        onToggleTheme={toggleTheme}
         onOpenWalletModal={() => setIsWalletModalOpen(true)}
         onDisconnect={handleDisconnect}
         onRefreshBalance={handleRefreshBalance}
@@ -110,88 +142,99 @@ export const App: React.FC = () => {
         onWalletConnected={handleWalletConnected}
       />
 
-      {/* Main Content */}
+      {/* Main Content: Wallet Gated */}
       <main className="container" style={{ flex: 1, padding: '2rem 1.5rem' }}>
-        {/* Banner Alert */}
-        <div className="alert-box alert-info" style={{ marginBottom: '1.5rem' }}>
-          <Info size={20} style={{ flexShrink: 0 }} />
-          <div>
-            <strong>Stellar Contributor Recognition Platform:</strong> Fully integrated with Stellar Testnet REST APIs, Soroban Smart Contracts, Multi-Wallet selector, live balance fetching, and real-time transaction event logging.
-          </div>
-        </div>
+        {!walletState.connected ? (
+          /* Landing Gate shown BEFORE wallet connection */
+          <WalletGate
+            onOpenWalletModal={() => setIsWalletModalOpen(true)}
+            onDemoConnect={handleDemoConnect}
+          />
+        ) : (
+          /* Main Platform Dashboard shown AFTER connecting wallet */
+          <div className="animate-slide-up">
+            {/* Banner Alert */}
+            <div className="alert-box alert-info" style={{ marginBottom: '1.5rem' }}>
+              <Info size={20} style={{ flexShrink: 0 }} />
+              <div>
+                <strong>Wallet Connected:</strong> Accessing Stellar Testnet REST APIs, Soroban Smart Contracts, live balance fetching, and real-time transaction event logging.
+              </div>
+            </div>
 
-        {/* Wallet Overview & Faucet Card */}
-        <WalletCard
-          walletState={walletState}
-          onRefreshBalance={handleRefreshBalance}
-        />
+            {/* Wallet Overview & Faucet Card */}
+            <WalletCard
+              walletState={walletState}
+              onRefreshBalance={handleRefreshBalance}
+            />
 
-        {/* Navigation Tabs */}
-        <div className="tabs-header">
-          <button
-            className={`tab-btn ${activeTab === 'leaderboard' ? 'active' : ''}`}
-            onClick={() => setActiveTab('leaderboard')}
-          >
-            <Award size={18} /> Contributor Leaderboard ({contributors.length})
-          </button>
+            {/* Navigation Tabs */}
+            <div className="tabs-header">
+              <button
+                className={`tab-btn ${activeTab === 'leaderboard' ? 'active' : ''}`}
+                onClick={() => setActiveTab('leaderboard')}
+              >
+                <Award size={18} /> Contributor Leaderboard ({contributors.length})
+              </button>
 
-          <button
-            className={`tab-btn ${activeTab === 'tip' ? 'active' : ''}`}
-            onClick={() => setActiveTab('tip')}
-          >
-            <Send size={18} /> Soroban Contract & Rewards
-            {selectedRecipient && (
-              <span className="badge badge-cyan" style={{ fontSize: '0.65rem' }}>Selected</span>
+              <button
+                className={`tab-btn ${activeTab === 'tip' ? 'active' : ''}`}
+                onClick={() => setActiveTab('tip')}
+              >
+                <Send size={18} /> Soroban Contract & Rewards
+                {selectedRecipient && (
+                  <span className="badge badge-cyan" style={{ fontSize: '0.65rem' }}>Selected</span>
+                )}
+              </button>
+
+              <button
+                className={`tab-btn ${activeTab === 'events' ? 'active' : ''}`}
+                onClick={() => setActiveTab('events')}
+              >
+                <Activity size={18} /> Real-Time Contract Events
+              </button>
+
+              <button
+                className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`}
+                onClick={() => setActiveTab('history')}
+              >
+                <History size={18} /> Transaction History ({transactions.length})
+              </button>
+            </div>
+
+            {/* Tab Views */}
+            {activeTab === 'leaderboard' && (
+              <ContributorList
+                contributors={contributors}
+                onAddContributor={handleAddContributor}
+                onRemoveContributor={handleRemoveContributor}
+                onSelectContributor={handleSelectContributor}
+              />
             )}
-          </button>
 
-          <button
-            className={`tab-btn ${activeTab === 'events' ? 'active' : ''}`}
-            onClick={() => setActiveTab('events')}
-          >
-            <Activity size={18} /> Real-Time Contract Events
-          </button>
+            {activeTab === 'tip' && (
+              <TippingForm
+                walletState={walletState}
+                selectedRecipient={selectedRecipient}
+                onTransactionComplete={handleTransactionComplete}
+              />
+            )}
 
-          <button
-            className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`}
-            onClick={() => setActiveTab('history')}
-          >
-            <History size={18} /> Transaction History ({transactions.length})
-          </button>
-        </div>
+            {activeTab === 'events' && (
+              <ContractEvents />
+            )}
 
-        {/* Tab Views */}
-        {activeTab === 'leaderboard' && (
-          <ContributorList
-            contributors={contributors}
-            onAddContributor={handleAddContributor}
-            onRemoveContributor={handleRemoveContributor}
-            onSelectContributor={handleSelectContributor}
-          />
-        )}
-
-        {activeTab === 'tip' && (
-          <TippingForm
-            walletState={walletState}
-            selectedRecipient={selectedRecipient}
-            onTransactionComplete={handleTransactionComplete}
-          />
-        )}
-
-        {activeTab === 'events' && (
-          <ContractEvents />
-        )}
-
-        {activeTab === 'history' && (
-          <TransactionHistory transactions={transactions} />
+            {activeTab === 'history' && (
+              <TransactionHistory transactions={transactions} />
+            )}
+          </div>
         )}
       </main>
 
       {/* Footer */}
       <footer style={{
-        borderTop: '1px solid var(--border-glass)',
+        borderTop: '1px solid var(--border-color)',
         padding: '1.5rem 0',
-        background: 'rgba(10, 14, 23, 0.9)',
+        background: 'var(--bg-card)',
         marginTop: 'auto',
         fontSize: '0.85rem',
         color: 'var(--text-muted)',
@@ -202,7 +245,7 @@ export const App: React.FC = () => {
             Built for <strong>Stellar Monthly Builder Challenge</strong> • Level 1 & Level 2 Submission
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            Powered by <Sparkles size={14} color="#8B5CF6" /> <strong>Soroban Smart Contracts & Stellar Horizon API</strong>
+            Powered by <Sparkles size={14} color="var(--primary)" /> <strong>Soroban Smart Contracts & Stellar Horizon API</strong>
           </div>
         </div>
       </footer>
