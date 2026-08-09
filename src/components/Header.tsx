@@ -1,23 +1,33 @@
 import React from 'react';
-import { Wallet, LogOut, Sparkles, RefreshCw, Layers } from 'lucide-react';
+import { Wallet, LogOut, Sparkles, RefreshCw, Layers, ChevronDown } from 'lucide-react';
 import { WalletState } from '../services/stellar';
 
 interface HeaderProps {
   walletState: WalletState;
-  onConnect: () => void;
+  onOpenWalletModal: () => void;
   onDisconnect: () => void;
   onRefreshBalance: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   walletState,
-  onConnect,
+  onOpenWalletModal,
   onDisconnect,
   onRefreshBalance
 }) => {
   const formatAddress = (addr: string | null) => {
     if (!addr) return '';
     return `${addr.substring(0, 5)}...${addr.substring(addr.length - 5)}`;
+  };
+
+  const getProviderName = (providerId: string | null) => {
+    switch (providerId) {
+      case 'freighter': return 'Freighter 🚀';
+      case 'albedo': return 'Albedo 🌌';
+      case 'xbull': return 'xBull 🐂';
+      case 'rabet': return 'Rabet 🐇';
+      default: return 'Stellar Wallet';
+    }
   };
 
   return (
@@ -50,10 +60,10 @@ export const Header: React.FC<HeaderProps> = ({
               <h1 style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '-0.02em', background: 'linear-gradient(90deg, #FFF, #C4B5FD)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 Stellar Recognizer
               </h1>
-              <span className="badge badge-purple">Level 1</span>
+              <span className="badge badge-gold">Level 2 Yellow Belt</span>
             </div>
             <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              Contributor Recognition & Tipping Platform
+              Multi-Wallet & Soroban Smart Contract Platform
             </p>
           </div>
         </div>
@@ -93,7 +103,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
               </div>
 
-              {/* Connected Address & Disconnect */}
+              {/* Connected Address & Provider Info */}
               <div style={{
                 background: 'var(--primary-light)',
                 border: '1px solid rgba(139, 92, 246, 0.3)',
@@ -104,14 +114,19 @@ export const Header: React.FC<HeaderProps> = ({
                 gap: '0.6rem'
               }}>
                 <Wallet size={15} color="#C4B5FD" />
-                <span className="font-mono" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#FFFFFF' }}>
-                  {formatAddress(walletState.publicKey)}
-                </span>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span className="font-mono" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#FFFFFF' }}>
+                    {formatAddress(walletState.publicKey)}
+                  </span>
+                  <span style={{ fontSize: '0.68rem', color: '#06B6D4', fontWeight: 600 }}>
+                    {getProviderName(walletState.provider)}
+                  </span>
+                </div>
                 <button
                   onClick={onDisconnect}
                   className="btn btn-danger"
-                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem' }}
-                  title="Disconnect Freighter Wallet"
+                  style={{ padding: '0.25rem 0.5rem', fontSize: '0.75rem', marginLeft: '0.25rem' }}
+                  title="Disconnect Wallet"
                 >
                   <LogOut size={13} />
                   Disconnect
@@ -120,12 +135,13 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           ) : (
             <button
-              onClick={onConnect}
+              onClick={onOpenWalletModal}
               disabled={walletState.isLoading}
               className="btn btn-primary"
             >
               <Wallet size={18} />
-              {walletState.isLoading ? 'Connecting...' : 'Connect Freighter Wallet'}
+              {walletState.isLoading ? 'Connecting...' : 'Connect Wallet (Multi-Wallet)'}
+              <ChevronDown size={14} style={{ marginLeft: '2px' }} />
             </button>
           )}
         </div>

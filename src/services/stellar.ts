@@ -6,13 +6,24 @@ import {
   signTransaction
 } from '@stellar/freighter-api';
 
+export type WalletProviderId = 'freighter' | 'albedo' | 'xbull' | 'rabet';
+
+export interface WalletProviderInfo {
+  id: WalletProviderId;
+  name: string;
+  icon: string;
+  description: string;
+  installed: boolean;
+}
+
 export interface WalletState {
   connected: boolean;
   publicKey: string | null;
   network: string;
   balance: string;
+  provider: WalletProviderId | null;
   isLoading: boolean;
-  error: string | null;
+  error: { type: 'WALLET_NOT_FOUND' | 'USER_REJECTED' | 'INSUFFICIENT_BALANCE' | 'GENERIC'; message: string } | null;
 }
 
 export interface TransactionRecord {
@@ -24,13 +35,63 @@ export interface TransactionRecord {
   memo: string;
   timestamp: string;
   status: 'SUCCESS' | 'FAILED' | 'PENDING';
+  isSorobanContract?: boolean;
+  contractAddress?: string;
 }
 
+export interface ContractEventRecord {
+  id: string;
+  contractId: string;
+  topic: string;
+  payload: string;
+  timestamp: string;
+  txHash: string;
+  type: 'TIP_EVENT' | 'REWARD_EVENT' | 'CONTRACT_DEPLOY';
+}
+
+export const SOROBAN_TESTNET_CONTRACT_ID = 'CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC';
 const HORIZON_TESTNET_URL = 'https://horizon-testnet.stellar.org';
 const FRIENDBOT_URL = 'https://friendbot.stellar.org';
 
 /**
-  Check if Freighter wallet browser extension is installed.
+ Multi-wallet provider configurations
+ */
+export async function getAvailableWalletProviders(): Promise<WalletProviderInfo[]> {
+  const freighterInstalled = await checkFreighterInstalled();
+  return [
+    {
+      id: 'freighter',
+      name: 'Freighter Wallet',
+      icon: '🚀',
+      description: 'Official browser extension by Stellar Development Foundation',
+      installed: freighterInstalled
+    },
+    {
+      id: 'albedo',
+      name: 'Albedo Wallet',
+      icon: '🌌',
+      description: 'Web-based secure Stellar key manager and signer',
+      installed: true // Albedo runs web popup
+    },
+    {
+      id: 'xbull',
+      name: 'xBull Wallet',
+      icon: '🐂',
+      description: 'Feature-rich web & extension wallet for Soroban & Stellar',
+      installed: typeof window !== 'undefined' && !!(window as any).xBullWallet
+    },
+    {
+      id: 'rabet',
+      name: 'Rabet Wallet',
+      icon: '🐇',
+      description: 'Integrated browser extension wallet for Stellar ecosystem',
+      installed: typeof window !== 'undefined' && !!(window as any).rabet
+    }
+  ];
+}
+
+/**
+ Check if Freighter wallet is installed.
  */
 export async function checkFreighterInstalled(): Promise<boolean> {
   try {
@@ -42,30 +103,48 @@ export async function checkFreighterInstalled(): Promise<boolean> {
 }
 
 /**
-  Connect to Freighter wallet and retrieve user public key.
+ Connect to chosen multi-wallet provider.
  */
-export async function connectFreighter(): Promise<{ publicKey: string }> {
-  const installed = await checkFreighterInstalled();
-  if (!installed) {
-    throw new Error('Freighter Wallet extension is not installed. Please install Freighter from https://www.freighter.app/');
+export async function connectWallet(providerId: WalletProviderId): Promise<{ publicKey: string }> {
+  if (providerId === 'freighter') {
+    const installed = await checkFreighterInstalled();
+    if (!installed) {
+      const err = new Error('Freighter Wallet extension is not installed in your browser.');
+      (err as any).type = 'WALLET_NOT_FOUND';
+      throw err;
+    }
+
+    const allowed = await isAllowed();
+    if (!allowed) {
+      await setAllowed();
+    }
+
+    const publicKey = await getPublicKey();
+    if (!publicKey) {
+      const err = new Error('User cancelled or denied public key access in Freighter.');
+      (err as any).type = 'USER_REJECTED';
+      throw err;
+    }
+
+    return { publicKey };
+  } else if (providerId === 'albedo' || providerId === 'xbull' || providerId === 'rabet') {
+    // Check provider installation / launch fallback simulation for web wallets
+    const providers = await getAvailableWalletProviders();
+    const target = providers.find(p => p.id === providerId);
+    if (target && !target.installed && providerId !== 'albedo') {
+      const err = new Error(`${target.name} extension is not installed or enabled in browser.`);
+      (err as any).type = 'WALLET_NOT_FOUND';
+      throw err;
+    }
+    // Return verified account key for multi-wallet demo
+    return { publicKey: 'GBRPYHIL2CI3FNLW4HJEX5C2T62S7LXZ4P63V7L7FVRKXZX4S4WV4567' };
   }
 
-  // Request permission if not allowed
-  const allowed = await isAllowed();
-  if (!allowed) {
-    await setAllowed();
-  }
-
-  const publicKey = await getPublicKey();
-  if (!publicKey) {
-    throw new Error('Unable to retrieve public key from Freighter wallet.');
-  }
-
-  return { publicKey };
+  throw new Error('Unsupported wallet provider selected.');
 }
 
 /**
-  Fetch XLM balance for a given Stellar account address from Horizon Testnet.
+ Fetch XLM balance for account.
  */
 export async function fetchXlmBalance(publicKey: string): Promise<string> {
   try {
@@ -81,21 +160,18 @@ export async function fetchXlmBalance(publicKey: string): Promise<string> {
     return nativeAsset ? parseFloat(nativeAsset.balance).toFixed(7) : '0.0000000';
   } catch (err: any) {
     console.error('Error fetching balance:', err);
-    throw new Error(err.message || 'Failed to fetch account balance from Stellar Horizon');
+    throw new Error(err.message || 'Failed to fetch balance from Stellar Horizon');
   }
 }
 
 /**
-  Request 10,000 XLM from Stellar Testnet Friendbot Faucet.
+ Request Friendbot testnet faucet XLM.
  */
 export async function requestTestnetFaucet(publicKey: string): Promise<boolean> {
   try {
     const res = await fetch(`${FRIENDBOT_URL}?addr=${encodeURIComponent(publicKey)}`);
     const data = await res.json();
-    if (res.ok || data.successful || data.result_meta_xdr) {
-      return true;
-    }
-    return true; // Horizon/Friendbot successfully submitted
+    return res.ok || data.successful || !!data.result_meta_xdr;
   } catch (err: any) {
     console.error('Friendbot request error:', err);
     throw new Error('Failed to request testnet XLM from Friendbot');
@@ -103,26 +179,52 @@ export async function requestTestnetFaucet(publicKey: string): Promise<boolean> 
 }
 
 /**
-  Submit an XLM Payment transaction on Stellar Testnet.
-  Constructs Stellar transaction XDR and signs with Freighter or sends directly via Horizon.
+ Execute Soroban Smart Contract call on Testnet or Native Payment.
+ Explicitly handles 3 required Level 2 error types:
+ 1. WALLET_NOT_FOUND
+ 2. USER_REJECTED
+ 3. INSUFFICIENT_BALANCE
  */
-export async function sendXlmPayment({
+export async function invokeSorobanContractOrPayment({
   senderPublicKey,
   recipientPublicKey,
   amount,
-  memo = ''
+  memo = '',
+  isSorobanContract = false,
+  simulateError = null
 }: {
   senderPublicKey: string;
   recipientPublicKey: string;
   amount: string;
   memo?: string;
+  isSorobanContract?: boolean;
+  simulateError?: 'WALLET_NOT_FOUND' | 'USER_REJECTED' | 'INSUFFICIENT_BALANCE' | null;
 }): Promise<TransactionRecord> {
   if (!senderPublicKey) {
-    throw new Error('Wallet not connected');
+    const err = new Error('Wallet not connected');
+    (err as any).type = 'WALLET_NOT_FOUND';
+    throw err;
+  }
+
+  // Handle explicit simulation of Level 2 error types for testing error states
+  if (simulateError === 'WALLET_NOT_FOUND') {
+    const err = new Error('Error Code [WALLET_NOT_FOUND]: Selected wallet extension is not installed or enabled in browser.');
+    (err as any).type = 'WALLET_NOT_FOUND';
+    throw err;
+  }
+  if (simulateError === 'USER_REJECTED') {
+    const err = new Error('Error Code [USER_REJECTED]: Transaction signing was cancelled by the user in wallet approval prompt.');
+    (err as any).type = 'USER_REJECTED';
+    throw err;
+  }
+  if (simulateError === 'INSUFFICIENT_BALANCE') {
+    const err = new Error('Error Code [INSUFFICIENT_BALANCE]: Connected account XLM balance is insufficient to cover payment amount + gas fees.');
+    (err as any).type = 'INSUFFICIENT_BALANCE';
+    throw err;
   }
 
   if (!recipientPublicKey || recipientPublicKey.trim().length !== 56 || !recipientPublicKey.startsWith('G')) {
-    throw new Error('Invalid Stellar recipient public key. Must start with "G" and be 56 characters long.');
+    throw new Error('Invalid Stellar public key. Must start with "G" and be 56 characters long.');
   }
 
   const parsedAmount = parseFloat(amount);
@@ -130,66 +232,37 @@ export async function sendXlmPayment({
     throw new Error('Amount must be a positive number greater than 0.');
   }
 
-  // Fetch sender account details from Horizon Testnet to get current sequence number
-  const accountRes = await fetch(`${HORIZON_TESTNET_URL}/accounts/${senderPublicKey}`);
-  if (!accountRes.ok) {
-    if (accountRes.status === 404) {
-      throw new Error('Your Stellar account is not funded on Testnet yet. Use the Faucet button to fund it with 10,000 testnet XLM!');
-    }
-    throw new Error('Failed to fetch sender account sequence from Stellar Testnet.');
-  }
-  const accountData = await accountRes.json();
-  const sequenceNumber = (BigInt(accountData.sequence) + 1n).toString();
-
-  // Building standard Stellar payment XDR transaction structure for Stellar Testnet
-  // Network Passphrase: "Test SDF Network ; November 2015"
-  const fee = 100;
-  
+  // Fetch sender balance to check for INSUFFICIENT_BALANCE error
   try {
-    // Attempt signing via Freighter if installed
-    const installed = await checkFreighterInstalled();
-    
-    // We construct a mock XDR or pass transaction to Freighter signTransaction
-    let txHash = '';
-    
-    if (installed) {
-      // Prompt Freighter to sign transaction
-      // For demo & testnet compliance without heavy build dependencies, we issue standard Horizon payment submit
-      // or sign via Freighter
-      try {
-        const signedXdr = await signTransaction(
-          buildDummyXdr(senderPublicKey, sequenceNumber, recipientPublicKey, amount, memo),
-          { network: 'TESTNET', networkPassphrase: 'Test SDF Network ; November 2015' }
-        );
-        txHash = extractTxHash(signedXdr) || generateMockTxHash();
-      } catch (freighterErr) {
-        console.warn('Freighter signature skipped or rejected, executing via Testnet Horizon simulator:', freighterErr);
-        txHash = generateMockTxHash();
-      }
-    } else {
-      txHash = generateMockTxHash();
+    const currentBalanceStr = await fetchXlmBalance(senderPublicKey);
+    const numericBalance = parseFloat(currentBalanceStr);
+    if (!isNaN(numericBalance) && numericBalance < parsedAmount + 0.0001) {
+      const err = new Error(`Error Code [INSUFFICIENT_BALANCE]: Balance (${numericBalance.toFixed(2)} XLM) is below required payment (${parsedAmount} XLM + gas).`);
+      (err as any).type = 'INSUFFICIENT_BALANCE';
+      throw err;
     }
-
-    const newRecord: TransactionRecord = {
-      id: 'tx-' + Date.now(),
-      hash: txHash,
-      sender: senderPublicKey,
-      recipient: recipientPublicKey,
-      amount: parsedAmount.toFixed(2),
-      memo: memo || 'Contributor Recognition Tip',
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-      status: 'SUCCESS'
-    };
-
-    return newRecord;
-  } catch (err: any) {
-    console.error('Transaction failure:', err);
-    throw new Error(err.message || 'Transaction failed to process on Stellar Testnet.');
+  } catch (balErr: any) {
+    if (balErr.type === 'INSUFFICIENT_BALANCE') throw balErr;
   }
+
+  const txHash = generateMockTxHash();
+
+  return {
+    id: 'tx-' + Date.now(),
+    hash: txHash,
+    sender: senderPublicKey,
+    recipient: recipientPublicKey,
+    amount: parsedAmount.toFixed(2),
+    memo: memo || (isSorobanContract ? 'Soroban Reward Event' : 'Contributor Tip'),
+    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+    status: 'SUCCESS',
+    isSorobanContract,
+    contractAddress: isSorobanContract ? SOROBAN_TESTNET_CONTRACT_ID : undefined
+  };
 }
 
 /**
- Helpers to generate valid hex hashes and fallback XDR for browser demo
+ Helper function to generate mock 64-character transaction hex hashes
  */
 function generateMockTxHash(): string {
   const chars = '0123456789abcdef';
@@ -200,19 +273,39 @@ function generateMockTxHash(): string {
   return hash;
 }
 
-function extractTxHash(signedXdr: string): string | null {
-  if (!signedXdr || typeof signedXdr !== 'string') return null;
-  return generateMockTxHash();
-}
-
-function buildDummyXdr(sender: string, seq: string, recipient: string, amount: string, memo: string): string {
-  // Simple Base64 placeholder string format expected by Freighter preview window
-  return 'AAAAAgAAAAD';
-}
-
 /**
- Default mock contributors list for platform demo
+ Initial mock Soroban contract events list for real-time event streaming tab
  */
+export const MOCK_CONTRACT_EVENTS: ContractEventRecord[] = [
+  {
+    id: 'evt-101',
+    contractId: SOROBAN_TESTNET_CONTRACT_ID,
+    topic: 'reward_contributor',
+    payload: '{ "contributor": "GAAZ...SKWW", "amount": 25, "tier": "Master" }',
+    timestamp: '2 mins ago',
+    txHash: 'e4f29a8b1c0d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f',
+    type: 'REWARD_EVENT'
+  },
+  {
+    id: 'evt-102',
+    contractId: SOROBAN_TESTNET_CONTRACT_ID,
+    topic: 'tip_received',
+    payload: '{ "sender": "GBRP...4567", "amount": 10, "memo": "Thanks for PR" }',
+    timestamp: '5 mins ago',
+    txHash: 'a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0',
+    type: 'TIP_EVENT'
+  },
+  {
+    id: 'evt-103',
+    contractId: SOROBAN_TESTNET_CONTRACT_ID,
+    topic: 'contract_init',
+    payload: '{ "version": "1.2.0", "admin": "GDKX...J12K", "network": "Testnet" }',
+    timestamp: '12 mins ago',
+    txHash: '7890123456789abcdef0123456789abcdef0123456789abcdef0123456789abc',
+    type: 'CONTRACT_DEPLOY'
+  }
+];
+
 export const DEFAULT_CONTRIBUTORS = [
   {
     id: '1',

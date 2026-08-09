@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { WalletCard } from './components/WalletCard';
+import { WalletModal } from './components/WalletModal';
 import { ContributorList } from './components/ContributorList';
 import { TippingForm } from './components/TippingForm';
 import { TransactionHistory } from './components/TransactionHistory';
+import { ContractEvents } from './components/ContractEvents';
 import {
   WalletState,
   TransactionRecord,
-  connectFreighter,
-  fetchXlmBalance,
-  checkFreighterInstalled
+  fetchXlmBalance
 } from './services/stellar';
-import { Award, Send, History, Sparkles, AlertCircle, Info, Heart } from 'lucide-react';
+import { Award, Send, History, Sparkles, Info, Activity } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [walletState, setWalletState] = useState<WalletState>({
@@ -19,56 +19,18 @@ export const App: React.FC = () => {
     publicKey: null,
     network: 'Stellar Testnet',
     balance: '0.0000000',
+    provider: null,
     isLoading: false,
     error: null
   });
 
+  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [selectedRecipient, setSelectedRecipient] = useState<{ name: string; publicKey: string } | null>(null);
-  const [activeTab, setActiveTab] = useState<'leaderboard' | 'tip' | 'history'>('leaderboard');
-  const [freighterInstalled, setFreighterInstalled] = useState<boolean | null>(null);
+  const [activeTab, setActiveTab] = useState<'leaderboard' | 'tip' | 'events' | 'history'>('leaderboard');
 
-  // Check if Freighter extension is available on load
-  useEffect(() => {
-    async function initCheck() {
-      const installed = await checkFreighterInstalled();
-      setFreighterInstalled(installed);
-    }
-    initCheck();
-  }, []);
-
-  const handleConnect = async () => {
-    setWalletState((prev) => ({ ...prev, isLoading: true, error: null }));
-    try {
-      const { publicKey } = await connectFreighter();
-      const balance = await fetchXlmBalance(publicKey);
-      setWalletState({
-        connected: true,
-        publicKey,
-        network: 'Stellar Testnet',
-        balance,
-        isLoading: false,
-        error: null
-      });
-    } catch (err: any) {
-      console.warn('Freighter connect error, enabling testnet fallback mode:', err);
-      // Fallback demo account for testing interface if Freighter extension isn't in browser
-      const mockKey = 'GAAZI4TCR3TY5OJHCTJC2A4QSYRZPBW6OCGR64C4U4V22RZ4VV5VSKWW';
-      let fetchedBalance = '10000.0000000';
-      try {
-        fetchedBalance = await fetchXlmBalance(mockKey);
-      } catch (e) {
-        // use default
-      }
-      setWalletState({
-        connected: true,
-        publicKey: mockKey,
-        network: 'Stellar Testnet',
-        balance: fetchedBalance,
-        isLoading: false,
-        error: null
-      });
-    }
+  const handleWalletConnected = (newState: WalletState) => {
+    setWalletState(newState);
   };
 
   const handleDisconnect = () => {
@@ -77,6 +39,7 @@ export const App: React.FC = () => {
       publicKey: null,
       network: 'Stellar Testnet',
       balance: '0.0000000',
+      provider: null,
       isLoading: false,
       error: null
     });
@@ -101,7 +64,6 @@ export const App: React.FC = () => {
 
   const handleTransactionComplete = (record: TransactionRecord) => {
     setTransactions((prev) => [record, ...prev]);
-    // Refresh balance after payment
     setTimeout(() => {
       handleRefreshBalance();
     }, 1000);
@@ -112,34 +74,27 @@ export const App: React.FC = () => {
       {/* Header */}
       <Header
         walletState={walletState}
-        onConnect={handleConnect}
+        onOpenWalletModal={() => setIsWalletModalOpen(true)}
         onDisconnect={handleDisconnect}
         onRefreshBalance={handleRefreshBalance}
       />
 
+      {/* Multi-Wallet Modal */}
+      <WalletModal
+        isOpen={isWalletModalOpen}
+        onClose={() => setIsWalletModalOpen(false)}
+        onWalletConnected={handleWalletConnected}
+      />
+
       {/* Main Content */}
       <main className="container" style={{ flex: 1, padding: '2rem 1.5rem' }}>
-        {/* Banner Alert for Level 1 Requirements */}
+        {/* Banner Alert for Level 2 Requirements */}
         <div className="alert-box alert-info" style={{ marginBottom: '1.5rem' }}>
           <Info size={20} style={{ flexShrink: 0 }} />
           <div>
-            <strong>Level 1 - White Belt Submission dApp:</strong> Integrated with Freighter Wallet & Stellar Testnet. Supports live wallet connection/disconnection, XLM balance fetching, testnet payments with transaction feedback, and Friendbot funding.
+            <strong>Level 2 - Yellow Belt Submission dApp:</strong> Multi-wallet support (Freighter, Albedo, xBull, Rabet), Soroban Smart Contract invocation on Testnet, 3 explicit error handlers (`WALLET_NOT_FOUND`, `USER_REJECTED`, `INSUFFICIENT_BALANCE`), and real-time event streaming.
           </div>
         </div>
-
-        {/* Freighter installation warning banner if not installed */}
-        {freighterInstalled === false && !walletState.connected && (
-          <div className="alert-box alert-warning" style={{ marginBottom: '1.5rem' }}>
-            <AlertCircle size={20} style={{ flexShrink: 0 }} />
-            <div>
-              <strong>Freighter Extension Not Detected:</strong> For full browser wallet signing, install the{' '}
-              <a href="https://www.freighter.app/" target="_blank" rel="noreferrer" style={{ color: '#FDE047', fontWeight: 600 }}>
-                Freighter Wallet extension
-              </a>
-              . Clicking "Connect" will launch testnet mode!
-            </div>
-          </div>
-        )}
 
         {/* Wallet Overview & Faucet Card */}
         <WalletCard
@@ -160,10 +115,17 @@ export const App: React.FC = () => {
             className={`tab-btn ${activeTab === 'tip' ? 'active' : ''}`}
             onClick={() => setActiveTab('tip')}
           >
-            <Send size={18} /> Send XLM Tip / Reward
+            <Send size={18} /> Soroban Contract & Rewards
             {selectedRecipient && (
               <span className="badge badge-cyan" style={{ fontSize: '0.65rem' }}>Selected</span>
             )}
+          </button>
+
+          <button
+            className={`tab-btn ${activeTab === 'events' ? 'active' : ''}`}
+            onClick={() => setActiveTab('events')}
+          >
+            <Activity size={18} /> Real-Time Contract Events
           </button>
 
           <button
@@ -187,6 +149,10 @@ export const App: React.FC = () => {
           />
         )}
 
+        {activeTab === 'events' && (
+          <ContractEvents />
+        )}
+
         {activeTab === 'history' && (
           <TransactionHistory transactions={transactions} />
         )}
@@ -204,10 +170,10 @@ export const App: React.FC = () => {
       }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            Built for <strong>Stellar Monthly Builder Challenge</strong> • Level 1 Submission
+            Built for <strong>Stellar Monthly Builder Challenge</strong> • Level 2 Yellow Belt Submission
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            Powered by <Sparkles size={14} color="#8B5CF6" /> <strong>Stellar Testnet & Freighter API</strong>
+            Powered by <Sparkles size={14} color="#8B5CF6" /> <strong>Soroban Smart Contracts & Multi-Wallet Kit</strong>
           </div>
         </div>
       </footer>
