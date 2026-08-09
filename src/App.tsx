@@ -11,13 +11,14 @@ import {
   WalletState,
   TransactionRecord,
   Contributor,
-  fetchXlmBalance,
-  fetchLiveAccountTransactions
+  NetworkId,
+  fetchXlmBalance
 } from './services/stellar';
 import { Award, Send, History, Sparkles, Info, Activity } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [network, setNetwork] = useState<NetworkId>('testnet');
   const [walletState, setWalletState] = useState<WalletState>({
     connected: false,
     publicKey: null,
@@ -34,7 +35,7 @@ export const App: React.FC = () => {
   const [selectedRecipient, setSelectedRecipient] = useState<{ name: string; publicKey: string } | null>(null);
   const [activeTab, setActiveTab] = useState<'leaderboard' | 'tip' | 'events' | 'history'>('leaderboard');
 
-  // Handle Light / Dark Theme switching
+  // Handle Theme switching
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
@@ -43,18 +44,11 @@ export const App: React.FC = () => {
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
   };
 
-  // Load live account transactions when wallet connects
-  useEffect(() => {
-    async function loadLiveTransactions() {
-      if (walletState.publicKey) {
-        const liveTxs = await fetchLiveAccountTransactions(walletState.publicKey);
-        if (liveTxs.length > 0) {
-          setTransactions(liveTxs);
-        }
-      }
-    }
-    loadLiveTransactions();
-  }, [walletState.publicKey]);
+  const handleSelectNetwork = (newNetwork: NetworkId) => {
+    setNetwork(newNetwork);
+    const networkName = newNetwork === 'mainnet' ? 'Stellar Mainnet' : newNetwork === 'localhost' ? 'Localhost / Futurenet' : 'Stellar Testnet';
+    setWalletState((prev) => ({ ...prev, network: networkName }));
+  };
 
   const handleWalletConnected = (newState: WalletState) => {
     setWalletState(newState);
@@ -71,7 +65,7 @@ export const App: React.FC = () => {
     setWalletState({
       connected: true,
       publicKey: demoKey,
-      network: 'Stellar Testnet',
+      network: network === 'mainnet' ? 'Stellar Mainnet' : network === 'localhost' ? 'Localhost / Futurenet' : 'Stellar Testnet',
       balance,
       provider: 'freighter',
       isLoading: false,
@@ -123,12 +117,18 @@ export const App: React.FC = () => {
     }, 1000);
   };
 
+  const handleClearHistory = () => {
+    setTransactions([]);
+  };
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
       <Header
         walletState={walletState}
         theme={theme}
+        network={network}
+        onSelectNetwork={handleSelectNetwork}
         onToggleTheme={toggleTheme}
         onOpenWalletModal={() => setIsWalletModalOpen(true)}
         onDisconnect={handleDisconnect}
@@ -157,7 +157,7 @@ export const App: React.FC = () => {
             <div className="alert-box alert-info" style={{ marginBottom: '1.5rem' }}>
               <Info size={20} style={{ flexShrink: 0 }} />
               <div>
-                <strong>Wallet Connected:</strong> Accessing Stellar Testnet REST APIs, Soroban Smart Contracts, live balance fetching, and real-time transaction event logging.
+                <strong>Active Network ({network.toUpperCase()}):</strong> Stellar REST APIs, Soroban Smart Contracts, live balance fetching, and real-time transaction event logging.
               </div>
             </div>
 
@@ -197,7 +197,7 @@ export const App: React.FC = () => {
                 className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`}
                 onClick={() => setActiveTab('history')}
               >
-                <History size={18} /> Transaction History ({transactions.length})
+                <History size={18} /> Session Transaction Log ({transactions.length})
               </button>
             </div>
 
@@ -224,7 +224,10 @@ export const App: React.FC = () => {
             )}
 
             {activeTab === 'history' && (
-              <TransactionHistory transactions={transactions} />
+              <TransactionHistory
+                transactions={transactions}
+                onClearHistory={handleClearHistory}
+              />
             )}
           </div>
         )}
@@ -245,7 +248,7 @@ export const App: React.FC = () => {
             Built for <strong>Stellar Monthly Builder Challenge</strong> • Level 1 & Level 2 Submission
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            Powered by <Sparkles size={14} color="var(--primary)" /> <strong>Soroban Smart Contracts & Stellar Horizon API</strong>
+            Powered by <Sparkles size={14} color="var(--primary)" /> <strong>Soroban Smart Contracts & Stellar API</strong>
           </div>
         </div>
       </footer>

@@ -1,10 +1,12 @@
 import React from 'react';
-import { Wallet, LogOut, Sparkles, RefreshCw, Layers, Sun, Moon, ChevronDown } from 'lucide-react';
-import { WalletState } from '../services/stellar';
+import { Wallet, LogOut, Sparkles, RefreshCw, Layers, Sun, Moon, ChevronDown, Globe } from 'lucide-react';
+import { WalletState, NetworkId } from '../services/stellar';
 
 interface HeaderProps {
   walletState: WalletState;
   theme: 'dark' | 'light';
+  network: NetworkId;
+  onSelectNetwork: (network: NetworkId) => void;
   onToggleTheme: () => void;
   onOpenWalletModal: () => void;
   onDisconnect: () => void;
@@ -14,6 +16,8 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   walletState,
   theme,
+  network,
+  onSelectNetwork,
   onToggleTheme,
   onOpenWalletModal,
   onDisconnect,
@@ -72,8 +76,31 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Right Header: Theme Toggle, Network status & Wallet button */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        {/* Right Header: Network Selector, Theme Toggle & Wallet Button */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {/* Network Switcher Dropdown */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', background: 'var(--bg-input)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', padding: '0.2rem 0.5rem' }}>
+            <Globe size={14} color="var(--accent-cyan)" />
+            <select
+              value={network}
+              onChange={(e) => onSelectNetwork(e.target.value as NetworkId)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'var(--text-main)',
+                fontSize: '0.78rem',
+                fontWeight: 600,
+                outline: 'none',
+                cursor: 'pointer',
+                fontFamily: 'inherit'
+              }}
+            >
+              <option value="testnet" style={{ background: 'var(--bg-card)', color: 'var(--text-main)' }}>🟢 Testnet</option>
+              <option value="mainnet" style={{ background: 'var(--bg-card)', color: 'var(--text-main)' }}>🔵 Mainnet</option>
+              <option value="localhost" style={{ background: 'var(--bg-card)', color: 'var(--text-main)' }}>🟡 Localhost</option>
+            </select>
+          </div>
+
           {/* Theme Toggle Button */}
           <button
             onClick={onToggleTheme}
@@ -83,12 +110,6 @@ export const Header: React.FC<HeaderProps> = ({
           >
             {theme === 'dark' ? <Sun size={17} color="#FDE047" /> : <Moon size={17} color="#475569" />}
           </button>
-
-          {/* Testnet Badge */}
-          <div className="badge badge-cyan" style={{ fontSize: '0.7rem' }}>
-            <span className="pulse-dot"></span>
-            Testnet
-          </div>
 
           {walletState.connected ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>

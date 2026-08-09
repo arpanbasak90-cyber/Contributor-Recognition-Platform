@@ -7,6 +7,7 @@ import {
 } from '@stellar/freighter-api';
 
 export type WalletProviderId = 'freighter' | 'albedo' | 'xbull' | 'rabet';
+export type NetworkId = 'testnet' | 'mainnet' | 'localhost';
 
 export interface WalletProviderInfo {
   id: WalletProviderId;
