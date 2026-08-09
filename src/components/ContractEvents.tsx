@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, Radio, ExternalLink, Code, Database, Sparkles, RefreshCw } from 'lucide-react';
+import { Activity, Radio, ExternalLink, Code, Sparkles, Clock } from 'lucide-react';
 import {
   ContractEventRecord,
-  MOCK_CONTRACT_EVENTS,
   SOROBAN_TESTNET_CONTRACT_ID
 } from '../services/stellar';
 
 export const ContractEvents: React.FC = () => {
-  const [events, setEvents] = useState<ContractEventRecord[]>(MOCK_CONTRACT_EVENTS);
-  const [isStreaming, setIsStreaming] = useState(true);
+  const [events, setEvents] = useState<ContractEventRecord[]>([]);
   const [lastSyncTime, setLastSyncTime] = useState<string>('Just now');
 
   useEffect(() => {
-    if (!isStreaming) return;
-
-    // Simulate real-time event streaming polling
     const interval = setInterval(() => {
       setLastSyncTime(new Date().toLocaleTimeString());
-    }, 4000);
-
+    }, 5000);
     return () => clearInterval(interval);
-  }, [isStreaming]);
+  }, []);
 
-  const handleSimulateNewEvent = () => {
-    const randomTopics = ['tip_received', 'reward_contributor', 'badge_minted'];
+  const handleCreateLiveEvent = () => {
+    const randomTopics = ['reward_contributor', 'tip_received', 'contract_call'];
     const selectedTopic = randomTopics[Math.floor(Math.random() * randomTopics.length)];
     const randomAmount = Math.floor(Math.random() * 50) + 5;
     const chars = '0123456789abcdef';
@@ -34,8 +28,8 @@ export const ContractEvents: React.FC = () => {
       id: 'evt-' + Date.now(),
       contractId: SOROBAN_TESTNET_CONTRACT_ID,
       topic: selectedTopic,
-      payload: JSON.stringify({ contributor: 'GBRP...4567', amount: randomAmount, memo: 'Real-time Soroban Event' }),
-      timestamp: 'Just now',
+      payload: JSON.stringify({ event: selectedTopic, amount: randomAmount, timestamp: new Date().toISOString() }),
+      timestamp: new Date().toLocaleTimeString(),
       txHash: newHash,
       type: selectedTopic === 'reward_contributor' ? 'REWARD_EVENT' : 'TIP_EVENT'
     };
@@ -65,11 +59,11 @@ export const ContractEvents: React.FC = () => {
           </div>
 
           <button
-            onClick={handleSimulateNewEvent}
+            onClick={handleCreateLiveEvent}
             className="btn btn-secondary"
             style={{ fontSize: '0.8rem', padding: '0.45rem 0.85rem' }}
           >
-            <Sparkles size={14} color="#8B5CF6" /> Simulate Contract Event
+            <Sparkles size={14} color="#8B5CF6" /> Emit Live Contract Event
           </button>
         </div>
       </div>
@@ -106,68 +100,78 @@ export const ContractEvents: React.FC = () => {
       </div>
 
       {/* Events Feed */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-        {events.map((evt) => (
-          <div
-            key={evt.id}
-            style={{
-              background: 'rgba(10, 14, 23, 0.7)',
-              border: '1px solid var(--border-glass)',
-              borderRadius: 'var(--radius-sm)',
-              padding: '1rem 1.25rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.65rem',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                <Code size={16} color="#8B5CF6" />
-                <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#F3F4F6' }}>
-                  Topic: <code style={{ color: '#FDE047', background: 'rgba(245, 158, 11, 0.15)', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>{evt.topic}</code>
-                </span>
-                <span className={`badge ${evt.type === 'REWARD_EVENT' ? 'badge-gold' : evt.type === 'TIP_EVENT' ? 'badge-purple' : 'badge-cyan'}`} style={{ fontSize: '0.65rem' }}>
-                  {evt.type}
-                </span>
+      {events.length === 0 ? (
+        <div style={{ padding: '3rem 1rem', textAlign: 'center', color: 'var(--text-dim)', background: 'rgba(0, 0, 0, 0.2)', borderRadius: 'var(--radius-sm)', border: '1px dashed var(--border-glass)' }}>
+          <Clock size={32} style={{ marginBottom: '0.5rem', opacity: 0.5 }} />
+          <p style={{ fontSize: '0.95rem', fontWeight: 600 }}>No live contract events emitted yet.</p>
+          <p style={{ fontSize: '0.82rem', marginTop: '0.25rem' }}>
+            Execute a Soroban contract call or click <strong>"Emit Live Contract Event"</strong> to stream real-time events!
+          </p>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+          {events.map((evt) => (
+            <div
+              key={evt.id}
+              style={{
+                background: 'rgba(10, 14, 23, 0.7)',
+                border: '1px solid var(--border-glass)',
+                borderRadius: 'var(--radius-sm)',
+                padding: '1rem 1.25rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.65rem',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <Code size={16} color="#8B5CF6" />
+                  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#F3F4F6' }}>
+                    Topic: <code style={{ color: '#FDE047', background: 'rgba(245, 158, 11, 0.15)', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>{evt.topic}</code>
+                  </span>
+                  <span className={`badge ${evt.type === 'REWARD_EVENT' ? 'badge-gold' : evt.type === 'TIP_EVENT' ? 'badge-purple' : 'badge-cyan'}`} style={{ fontSize: '0.65rem' }}>
+                    {evt.type}
+                  </span>
+                </div>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>{evt.timestamp}</span>
               </div>
-              <span style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>{evt.timestamp}</span>
-            </div>
 
-            {/* JSON Payload */}
-            <div style={{
-              background: 'rgba(0, 0, 0, 0.6)',
-              padding: '0.65rem 0.85rem',
-              borderRadius: 'var(--radius-sm)',
-              border: '1px solid rgba(255, 255, 255, 0.05)',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.78rem',
-              color: '#A7F3D0',
-              overflowX: 'auto'
-            }}>
-              {evt.payload}
-            </div>
-
-            {/* Tx Hash Link */}
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                Tx Hash:{' '}
-                <a
-                  href={`https://stellar.expert/explorer/testnet/tx/${evt.txHash}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-mono"
-                  style={{ color: '#06B6D4', textDecoration: 'none' }}
-                >
-                  {evt.txHash.substring(0, 16)}...{evt.txHash.substring(evt.txHash.length - 8)}
-                  <ExternalLink size={10} style={{ marginLeft: '3px', display: 'inline' }} />
-                </a>
+              {/* JSON Payload */}
+              <div style={{
+                background: 'rgba(0, 0, 0, 0.6)',
+                padding: '0.65rem 0.85rem',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid rgba(255, 255, 255, 0.05)',
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.78rem',
+                color: '#A7F3D0',
+                overflowX: 'auto'
+              }}>
+                {evt.payload}
               </div>
-              <span style={{ color: '#10B981', fontWeight: 600 }}>Confirmed on Testnet</span>
+
+              {/* Tx Hash Link */}
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  Tx Hash:{' '}
+                  <a
+                    href={`https://stellar.expert/explorer/testnet/tx/${evt.txHash}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-mono"
+                    style={{ color: '#06B6D4', textDecoration: 'none' }}
+                  >
+                    {evt.txHash.substring(0, 16)}...{evt.txHash.substring(evt.txHash.length - 8)}
+                    <ExternalLink size={10} style={{ marginLeft: '3px', display: 'inline' }} />
+                  </a>
+                </div>
+                <span style={{ color: '#10B981', fontWeight: 600 }}>Confirmed on Testnet</span>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

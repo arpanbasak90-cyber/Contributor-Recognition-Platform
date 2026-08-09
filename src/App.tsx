@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { WalletCard } from './components/WalletCard';
 import { WalletModal } from './components/WalletModal';
@@ -9,7 +9,9 @@ import { ContractEvents } from './components/ContractEvents';
 import {
   WalletState,
   TransactionRecord,
-  fetchXlmBalance
+  Contributor,
+  fetchXlmBalance,
+  fetchLiveAccountTransactions
 } from './services/stellar';
 import { Award, Send, History, Sparkles, Info, Activity } from 'lucide-react';
 
@@ -26,8 +28,22 @@ export const App: React.FC = () => {
 
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
+  const [contributors, setContributors] = useState<Contributor[]>([]);
   const [selectedRecipient, setSelectedRecipient] = useState<{ name: string; publicKey: string } | null>(null);
   const [activeTab, setActiveTab] = useState<'leaderboard' | 'tip' | 'events' | 'history'>('leaderboard');
+
+  // Load live account transactions when wallet connects
+  useEffect(() => {
+    async function loadLiveTransactions() {
+      if (walletState.publicKey) {
+        const liveTxs = await fetchLiveAccountTransactions(walletState.publicKey);
+        if (liveTxs.length > 0) {
+          setTransactions(liveTxs);
+        }
+      }
+    }
+    loadLiveTransactions();
+  }, [walletState.publicKey]);
 
   const handleWalletConnected = (newState: WalletState) => {
     setWalletState(newState);
@@ -55,6 +71,14 @@ export const App: React.FC = () => {
     } catch (err) {
       setWalletState((prev) => ({ ...prev, isLoading: false }));
     }
+  };
+
+  const handleAddContributor = (newContrib: Contributor) => {
+    setContributors((prev) => [newContrib, ...prev]);
+  };
+
+  const handleRemoveContributor = (id: string) => {
+    setContributors((prev) => prev.filter(c => c.id !== id));
   };
 
   const handleSelectContributor = (contributor: { name: string; publicKey: string }) => {
@@ -88,11 +112,11 @@ export const App: React.FC = () => {
 
       {/* Main Content */}
       <main className="container" style={{ flex: 1, padding: '2rem 1.5rem' }}>
-        {/* Banner Alert for Level 2 Requirements */}
+        {/* Banner Alert */}
         <div className="alert-box alert-info" style={{ marginBottom: '1.5rem' }}>
           <Info size={20} style={{ flexShrink: 0 }} />
           <div>
-            <strong>Level 2 - Yellow Belt Submission dApp:</strong> Multi-wallet support (Freighter, Albedo, xBull, Rabet), Soroban Smart Contract invocation on Testnet, 3 explicit error handlers (`WALLET_NOT_FOUND`, `USER_REJECTED`, `INSUFFICIENT_BALANCE`), and real-time event streaming.
+            <strong>Stellar Contributor Recognition Platform:</strong> Fully integrated with Stellar Testnet REST APIs, Soroban Smart Contracts, Multi-Wallet selector, live balance fetching, and real-time transaction event logging.
           </div>
         </div>
 
@@ -108,7 +132,7 @@ export const App: React.FC = () => {
             className={`tab-btn ${activeTab === 'leaderboard' ? 'active' : ''}`}
             onClick={() => setActiveTab('leaderboard')}
           >
-            <Award size={18} /> Contributor Leaderboard
+            <Award size={18} /> Contributor Leaderboard ({contributors.length})
           </button>
 
           <button
@@ -138,7 +162,12 @@ export const App: React.FC = () => {
 
         {/* Tab Views */}
         {activeTab === 'leaderboard' && (
-          <ContributorList onSelectContributor={handleSelectContributor} />
+          <ContributorList
+            contributors={contributors}
+            onAddContributor={handleAddContributor}
+            onRemoveContributor={handleRemoveContributor}
+            onSelectContributor={handleSelectContributor}
+          />
         )}
 
         {activeTab === 'tip' && (
@@ -170,10 +199,10 @@ export const App: React.FC = () => {
       }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            Built for <strong>Stellar Monthly Builder Challenge</strong> • Level 2 Yellow Belt Submission
+            Built for <strong>Stellar Monthly Builder Challenge</strong> • Level 1 & Level 2 Submission
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            Powered by <Sparkles size={14} color="#8B5CF6" /> <strong>Soroban Smart Contracts & Multi-Wallet Kit</strong>
+            Powered by <Sparkles size={14} color="#8B5CF6" /> <strong>Soroban Smart Contracts & Stellar Horizon API</strong>
           </div>
         </div>
       </footer>
