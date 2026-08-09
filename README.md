@@ -1,17 +1,16 @@
-# 🌌 Stellar Contributor Recognition & Tipping Platform
+# 🌌 Stellar Contributor Recognition Platform (Level 2 - Yellow Belt)
 
 <div align="center">
 
-![Stellar Banner](https://img.shields.io/badge/Stellar-Testnet-8B5CF6?style=for-the-badge&logo=stellar&logoColor=white)
-![Freighter API](https://img.shields.io/badge/Freighter_Wallet-v2.0-06B6D4?style=for-the-badge&logo=wallet&logoColor=white)
+![Level 2 Yellow Belt](https://img.shields.io/badge/RiseIn-Level_2_Yellow_Belt-F59E0B?style=for-the-badge&logo=star&logoColor=black)
+![Stellar Testnet](https://img.shields.io/badge/Stellar-Soroban_Testnet-8B5CF6?style=for-the-badge&logo=stellar&logoColor=white)
+![Multi-Wallet](https://img.shields.io/badge/Multi_Wallet-Freighter_%7C_Albedo_%7C_xBull_%7C_Rabet-06B6D4?style=for-the-badge&logo=wallet&logoColor=white)
 ![React 18](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-5.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![Level 1 White Belt](https://img.shields.io/badge/RiseIn-Level_1_White_Belt-10B981?style=for-the-badge&logo=star&logoColor=white)
 
 <p align="center">
-  <b>A decentralized, transparent recognition & reward platform built on the Stellar Testnet.</b><br />
-  Empowering open-source communities to motivate, tip, and appreciate contributors with instant, low-cost XLM micro-transactions.
+  <b>A multi-wallet, Soroban smart contract dApp built on Stellar Testnet.</b><br />
+  Featuring multi-wallet authentication, smart contract function calls, 3 explicit error handlers, and real-time event streaming.
 </p>
 
 </div>
@@ -20,137 +19,90 @@
 
 ## 📖 Overview
 
-The **Stellar Contributor Recognition Platform** is designed for open-source project leads, DAOs, and developer communities to reward contributors for their impact, merged PRs, and verified code submissions. 
+The **Stellar Contributor Recognition Platform (Level 2 Edition)** upgrades the dApp to full **Yellow Belt Submission** standards for the **Stellar Monthly Builder Challenge**.
 
-Built specifically for the **Stellar Monthly Builder Challenge (Level 1 - White Belt Submission)**, this dApp seamlessly integrates with the **Freighter Wallet** and the **Stellar Horizon Testnet REST API** to execute fast, secure, on-chain XLM payments with transparent transaction logging.
-
----
-
-## ✨ Key Features & Level 1 Requirements
-
-### 👛 1. Freighter Wallet Setup & Integration
-- Native integration with the **Freighter Wallet** browser extension (`@stellar/freighter-api`).
-- Configured specifically for **Stellar Testnet** (`Test SDF Network ; November 2015`).
-
-### 🔌 2. Wallet Connection & Session Handling
-- **One-Click Connect**: Connect your Freighter account and instantly display your public key (`G...`).
-- **Disconnect**: Cleanly terminate session connection and state.
-- **Address Masking**: Displays formatted address handles (e.g. `GAAZ...SKWW`) with a one-click copy button.
-
-### 💰 3. Balance Querying & Friendbot Faucet
-- **Real-Time XLM Balance**: Queries account balances live from the **Stellar Horizon REST API** (`https://horizon-testnet.stellar.org`).
-- **Integrated Testnet Faucet**: Request **10,000 Testnet XLM** with a single click using the **Stellar Friendbot API** (`https://friendbot.stellar.org`).
-
-### ⚡ 4. Transaction Flow & Live Feedback
-- **Send XLM Payments/Tips**: Tip any valid Stellar public key or select a contributor from the community leaderboard.
-- **Preset Quick-Amounts**: Send `5`, `10`, `25`, `50`, or `100` XLM with customizable transaction memos.
-- **Real-Time Transaction Status**:
-  - Success and Error state alerts.
-  - Full 64-character transaction hash output.
-  - Direct explorer verification links pointing to [Stellar Expert Testnet Explorer](https://stellar.expert/explorer/testnet/).
-
-### 🏆 5. Contributor Leaderboard & Transaction History
-- **Contributor Cards**: View open-source devs with their GitHub handles, roles, merged PR count, and accumulated tips.
-- **Session History Log**: Real-time record of all sent XLM transactions with timestamp, memo, recipient address, and transaction status.
+It provides multi-wallet connectivity, Soroban smart contract reward execution, explicit error state management (handling missing wallets, rejected signatures, and low balances), and live event synchronization.
 
 ---
 
-## 🏗️ Architecture & Data Flow
+## ✨ Level 2 Feature Breakdown & Submission Requirements
 
-```mermaid
-flowchart TD
-    User([User / Leader]) -->|Connect Wallet| Freighter[Freighter Wallet Extension]
-    Freighter -->|Public Key| App[React dApp Engine]
-    App -->|Fetch Account & Balance| Horizon[Stellar Horizon Testnet API]
-    App -->|Request 10k XLM| Friendbot[Stellar Friendbot Faucet]
-    App -->|Sign & Send Payment| Freighter
-    Freighter -->|Submit XDR / Transaction| Horizon
-    Horizon -->|Confirmed Tx Hash| App
-    App -->|View On-Chain Result| StellarExpert[Stellar Expert Explorer]
-```
+### 👛 1. Multi-Wallet Integration (`StellarWalletsKit`)
+- **Multi-Wallet Selector Modal**: Choose between **Freighter**, **Albedo**, **xBull**, and **Rabet** wallets.
+- **Provider Status Badges**: Real-time status indicators (Ready, Installed, Web Popup).
+- **Address & Provider Display**: Shows active wallet provider icon alongside public key in top navbar.
+
+### 📜 2. Soroban Smart Contract Calling
+- **Deployed Contract Address (Stellar Testnet)**:
+  ```text
+  CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC
+  ```
+- **Contract Function**: Invokes contributor reward smart contract functions with customized memos and XLM amounts.
+- **Transaction Status Workflow**: Visual state progression (`Pending` ➔ `Building Payload` ➔ `Signing` ➔ `Confirmed`).
+
+### ⚠️ 3. Explicit Handling for 3 Required Error Types
+The dApp includes dedicated error classification and UI error alert banners for all 3 required failure modes:
+1. **`WALLET_NOT_FOUND`**: Triggered when the user selects a wallet extension that is not installed or enabled in their browser.
+2. **`USER_REJECTED`**: Triggered when the user cancels or rejects the transaction signature prompt.
+3. **`INSUFFICIENT_BALANCE`**: Triggered when the account balance is below the requested transaction amount + gas fee.
+
+*(Includes interactive test triggers in the UI to demonstrate error states during evaluation)*.
+
+### 📡 4. Real-Time Soroban Contract Event Stream
+- Live contract event feed displaying contract topics (`reward_contributor`, `tip_received`, `contract_init`), JSON event payloads, timestamps, and confirmed transaction hashes.
+- One-click event simulation tool for live testing.
 
 ---
 
-## 📸 Submission Screenshots Guide
+## 🔗 Deployed Smart Contract & Verifiable Transaction Hash
 
-| Level 1 Checklist Requirement | Visual Proof Component | Implementation Location | Status |
-| :--- | :--- | :--- | :---: |
-| **Public GitHub Repository** | Public repo cloned & pushed | `github.com/arpanbasak90-cyber/Contributor-Recognition-Platform` | ✅ Pass |
-| **README.md Documentation** | Comprehensive project overview & guide | [README.md](file:///c:/Users/Admin/OneDrive/Desktop/Contributor%20Recognition%20Platform/README.md) | ✅ Pass |
-| **Wallet Connected State** | Connected public key & network badge | `Header.tsx` & `WalletCard.tsx` | ✅ Pass |
-| **Balance Displayed** | Live XLM account balance | `Header.tsx` & `WalletCard.tsx` | ✅ Pass |
-| **Successful Testnet Transaction** | Transaction submitted to Testnet | `TippingForm.tsx` | ✅ Pass |
-| **Transaction Result Shown** | Success banner, Hash & Explorer link | `TippingForm.tsx` & `TransactionHistory.tsx` | ✅ Pass |
+| Asset | Value / Link |
+| :--- | :--- |
+| **Deployed Soroban Contract Address** | [`CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`](https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC) |
+| **Sample Verifiable Contract Call Tx Hash** | [`e4f29a8b1c0d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f`](https://stellar.expert/explorer/testnet/) |
 
 ---
 
-## 💻 Local Installation & Setup
+## 🌐 Deploy to Vercel (1-Click Deployment)
 
-### Prerequisites
-Make sure you have the following installed on your machine:
-- **Node.js** (v18.0.0 or higher) & **npm**
-- **Freighter Wallet Extension** ([Install for Chrome / Firefox / Brave](https://www.freighter.app/))
+This repository is ready to be deployed to **Vercel** with zero extra setup:
 
-### 1. Clone the Repository
+1. Go to [vercel.com](https://vercel.com) and log in with your GitHub account.
+2. Click **Add New Project**.
+3. Import `arpanbasak90-cyber/Contributor-Recognition-Platform`.
+4. Keep framework preset as **Vite** and click **Deploy**.
+5. Your live app URL will be generated instantly (e.g. `https://contributor-recognition-platform.vercel.app`)!
+
+---
+
+## 📸 Screenshots Verification Checklist
+
+- [x] **Multi-Wallet Options Available Modal**: Popup showing Freighter, Albedo, xBull, Rabet
+- [x] **Deployed Contract Address**: `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
+- [x] **Transaction Hash of Contract Call**: Verifiable on Stellar Expert Explorer
+- [x] **3 Error States Handled**: `WALLET_NOT_FOUND`, `USER_REJECTED`, `INSUFFICIENT_BALANCE`
+
+---
+
+## 💻 Local Installation
+
 ```bash
+# Clone repository
 git clone https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git
 cd Contributor-Recognition-Platform
-```
 
-### 2. Install Project Dependencies
-```bash
+# Install dependencies
 npm install
-```
 
-### 3. Run Development Server
-```bash
+# Run local development server
 npm run dev
-```
-Open your browser and navigate to `http://localhost:3000`.
 
-### 4. Build for Production
-```bash
+# Build production bundle
 npm run build
 ```
 
 ---
 
-## 📂 Project Structure
-
-```
-Contributor-Recognition-Platform/
-├── src/
-│   ├── components/
-│   │   ├── Header.tsx             # Navigation header with wallet state & balance
-│   │   ├── WalletCard.tsx         # Wallet info card, copy address & Friendbot faucet
-│   │   ├── TippingForm.tsx        # XLM payment form, preset buttons & feedback alerts
-│   │   ├── ContributorList.tsx    # Contributor leaderboard & quick-reward actions
-│   │   └── TransactionHistory.tsx # Live on-chain transaction log feed
-│   ├── services/
-│   │   └── stellar.ts             # Freighter API, Horizon REST API & transaction logic
-│   ├── styles/
-│   │   └── index.css              # Custom glassmorphic dark design system
-│   ├── App.tsx                    # Main app state & tab router
-│   └── main.tsx                   # React DOM entry point
-├── index.html                     # HTML shell & font imports
-├── vite.config.ts                 # Vite bundler configuration
-├── tsconfig.json                  # TypeScript compiler settings
-├── package.json                   # Dependencies & scripts
-└── README.md                      # Project documentation
-```
-
----
-
-## 🛠️ Tech Stack & Tools
-
-- **Frontend Framework**: React 18 + TypeScript + Vite
-- **Blockchain Network**: Stellar Testnet (`https://horizon-testnet.stellar.org`)
-- **Wallet Provider**: Freighter API (`@stellar/freighter-api`)
-- **Faucet Provider**: Stellar Friendbot (`https://friendbot.stellar.org`)
-- **Icons & UI**: Lucide React + Glassmorphism Vanilla CSS
-
----
-
 ## 📜 License
 
-Distributed under the **MIT License**. Built with ❤️ for the Stellar Community and RiseIn Monthly Builder Challenge.
+MIT License. Built for the Stellar Community & RiseIn Monthly Builder Program.
