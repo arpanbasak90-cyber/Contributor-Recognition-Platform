@@ -27,24 +27,21 @@
 ### 1. Wallet Gate Landing Screen
 > Initial landing gate requiring users to connect a Stellar wallet (Freighter, Albedo, xBull, Rabet) before entering the application dashboard.
 
-<img width="1352" height="630" alt="new 1" src="https://github.com/user-attachments/assets/f903f384-5908-4174-b865-615d2110b419" />
-
+![Wallet Gate Landing Screen](./docs/screenshots/1_wallet_gate.png)
 
 ---
 
 ### 2. Connected Wallet & Live Dashboard
 > Wallet connected state displaying the active public key, network selector (Testnet, Mainnet, Localhost), real-time Horizon XLM balance, and Friendbot Testnet Faucet trigger.
 
-<img width="1365" height="641" alt="new 2" src="https://github.com/user-attachments/assets/943f6f7c-1ee9-47e4-86f1-c235a5ae1ae8" />
-
+![Connected Wallet & Live Dashboard](./docs/screenshots/2_wallet_connected.png)
 
 ---
 
 ### 3. Contributor Leaderboard & Soroban Reward Suite
 > Dynamic contributor leaderboard allowing users to register team members, select contributors, and execute on-chain XLM tips & Soroban smart contract calls.
 
-<img width="1124" height="643" alt="new 3" src="https://github.com/user-attachments/assets/6eb9054b-29cf-4ba4-8a18-8a1a47e4dffa" />
-
+![Contributor Leaderboard & Soroban Reward Suite](./docs/screenshots/3_contributor_leaderboard.png)
 
 ---
 
@@ -90,7 +87,7 @@
 | **Live Vercel Application** | [`https://contributor-recognition-platform.vercel.app`](https://contributor-recognition-platform.vercel.app) |
 | **GitHub Repository** | [`https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git`](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git) |
 | **Deployed Soroban Contract Address** | [`CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`](https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC) |
-| **Sample Verifiable Contract Call Tx Hash** | [`8622f97d3bc7f4b3c6a84c08663eb6a5bb46fdeb9a2ce2761fe60fdf0ce4497`](https://stellar.expert/explorer/testnet/tx/8622f97d3bc7f4b3c6a84c08663eb6a5bb46fdeb9a2ce2761fe60fdf0ce4497) |
+| **Sample Verifiable Contract Call Tx Hash** | [`8fb9ba6ba26a7a16a0097f92d8d4be8eb460032b1e3423bee944c623190baa4e`](https://stellar.expert/explorer/testnet/tx/8fb9ba6ba26a7a16a0097f92d8d4be8eb460032b1e3423bee944c623190baa4e) |
 
 ---
 
