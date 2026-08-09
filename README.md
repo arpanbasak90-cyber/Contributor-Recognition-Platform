@@ -27,21 +27,24 @@
 ### 1. Wallet Gate Landing Screen
 > Initial landing gate requiring users to connect a Stellar wallet (Freighter, Albedo, xBull, Rabet) before entering the application dashboard.
 
-![Wallet Gate Landing Screen](./docs/screenshots/1_wallet_gate.png)
+<img width="1352" height="630" alt="new 1" src="https://github.com/user-attachments/assets/f903f384-5908-4174-b865-615d2110b419" />
+
 
 ---
 
 ### 2. Connected Wallet & Live Dashboard
 > Wallet connected state displaying the active public key, network selector (Testnet, Mainnet, Localhost), real-time Horizon XLM balance, and Friendbot Testnet Faucet trigger.
 
-![Connected Wallet & Live Dashboard](./docs/screenshots/2_wallet_connected.png)
+<img width="1365" height="641" alt="new 2" src="https://github.com/user-attachments/assets/943f6f7c-1ee9-47e4-86f1-c235a5ae1ae8" />
+
 
 ---
 
 ### 3. Contributor Leaderboard & Soroban Reward Suite
 > Dynamic contributor leaderboard allowing users to register team members, select contributors, and execute on-chain XLM tips & Soroban smart contract calls.
 
-![Contributor Leaderboard & Soroban Reward Suite](./docs/screenshots/3_contributor_leaderboard.png)
+<img width="1124" height="643" alt="new 3" src="https://github.com/user-attachments/assets/6eb9054b-29cf-4ba4-8a18-8a1a47e4dffa" />
+
 
 ---
 
