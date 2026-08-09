@@ -12,12 +12,12 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transact
     <div className="glass-panel" style={{ padding: '1.75rem', marginBottom: '2rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ background: 'var(--accent-cyan-light)', padding: '0.5rem', borderRadius: 'var(--radius-sm)' }}>
-            <History size={20} color="var(--accent-cyan)" />
+          <div style={{ background: 'var(--primary-light)', padding: '0.5rem', borderRadius: 'var(--radius-sm)' }}>
+            <History size={20} color="var(--text-main)" />
           </div>
           <div>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 700 }}>Stellar Transaction Log</h2>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-main)' }}>Stellar Transaction Log</h2>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-main)', opacity: 0.9 }}>
               Real-time feed of confirmed XLM payments, tips, and rewards sent during your session.
             </p>
           </div>
@@ -27,7 +27,7 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transact
           <button
             onClick={onClearHistory}
             className="btn btn-secondary"
-            style={{ fontSize: '0.78rem', padding: '0.35rem 0.65rem' }}
+            style={{ fontSize: '0.8rem', padding: '0.35rem 0.65rem' }}
           >
             <Trash2 size={13} color="#EF4444" /> Clear Log
           </button>
@@ -38,15 +38,15 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transact
         <div style={{
           padding: '2.5rem 1rem',
           textAlign: 'center',
-          color: 'var(--text-muted)',
+          color: 'var(--text-main)',
           background: 'var(--bg-inner-box)',
           borderRadius: 'var(--radius-sm)',
           border: '1px dashed var(--border-color)'
         }}>
-          <Clock size={32} style={{ marginBottom: '0.5rem', opacity: 0.5 }} />
-          <p style={{ fontSize: '0.9rem', fontWeight: 600 }}>No session transactions recorded yet.</p>
-          <p style={{ fontSize: '0.8rem', marginTop: '0.25rem' }}>
-            Send an XLM tip or invoke a Soroban smart contract reward to record your first on-chain transaction!
+          <Clock size={32} style={{ marginBottom: '0.5rem', opacity: 0.6 }} />
+          <p style={{ fontSize: '0.95rem', fontWeight: 700 }}>No session transactions recorded yet.</p>
+          <p style={{ fontSize: '0.82rem', marginTop: '0.25rem', opacity: 0.9 }}>
+            Send an XLM tip or invoke a Soroban smart contract reward to record your first transaction!
           </p>
         </div>
       ) : (
@@ -76,37 +76,37 @@ export const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transact
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: '1px solid rgba(16, 185, 129, 0.3)'
+                  border: '1px solid var(--accent-green)'
                 }}>
-                  <ArrowUpRight size={20} color="var(--accent-green)" />
+                  <ArrowUpRight size={20} color="var(--text-main)" />
                 </div>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-main)' }}>
+                    <span style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--text-main)' }}>
                       {tx.isSorobanContract ? 'Soroban Contract Call' : 'Payment Sent'}
                     </span>
                     <span className="badge badge-green" style={{ fontSize: '0.65rem' }}>
                       <CheckCircle2 size={10} /> Confirmed
                     </span>
                   </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
-                    To: <span className="font-mono">{tx.recipient.substring(0, 6)}...{tx.recipient.substring(tx.recipient.length - 4)}</span> • Memo: "{tx.memo}"
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-main)', marginTop: '0.15rem', fontWeight: 600 }}>
+                    To: <span className="font-mono" style={{ fontWeight: 700 }}>{tx.recipient.substring(0, 6)}...{tx.recipient.substring(tx.recipient.length - 4)}</span> • Memo: "{tx.memo}"
                   </div>
                 </div>
               </div>
 
               {/* Right: Amount & Hash Link */}
               <div style={{ textAlign: 'right' }}>
-                <div className="font-mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--accent-gold)' }}>
+                <div className="font-mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--text-main)' }}>
                   -{tx.amount} XLM
                 </div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginTop: '0.2rem' }}>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-main)', marginTop: '0.2rem', fontWeight: 600 }}>
                   {tx.timestamp} •{' '}
                   <a
                     href={`https://stellar.expert/explorer/testnet/tx/${tx.hash}`}
                     target="_blank"
                     rel="noreferrer"
-                    style={{ color: 'var(--accent-cyan)', textDecoration: 'none', fontWeight: 600 }}
+                    style={{ color: 'var(--text-main)', textDecoration: 'underline', fontWeight: 700 }}
                   >
                     View Tx <ExternalLink size={10} style={{ display: 'inline' }} />
                   </a>

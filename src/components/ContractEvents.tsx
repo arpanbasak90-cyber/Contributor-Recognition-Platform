@@ -44,17 +44,17 @@ export const ContractEvents: React.FC = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.25rem' }}>
-            <Activity size={22} color="#06B6D4" />
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Real-Time Soroban Contract Event Stream</h2>
+            <Activity size={22} color="var(--text-main)" />
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-main)' }}>Real-Time Soroban Contract Event Stream</h2>
           </div>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-main)', opacity: 0.9 }}>
             Live contract logs & event notifications emitted from the Stellar Testnet Soroban smart contract.
           </p>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div className="badge badge-cyan" style={{ padding: '0.4rem 0.75rem', fontSize: '0.8rem' }}>
-            <Radio size={14} className="spin" color="#06B6D4" />
+            <Radio size={14} className="spin" color="var(--text-main)" />
             Live Sync: {lastSyncTime}
           </div>
 
@@ -63,15 +63,15 @@ export const ContractEvents: React.FC = () => {
             className="btn btn-secondary"
             style={{ fontSize: '0.8rem', padding: '0.45rem 0.85rem' }}
           >
-            <Sparkles size={14} color="#8B5CF6" /> Emit Live Contract Event
+            <Sparkles size={14} color="var(--text-main)" /> Emit Live Contract Event
           </button>
         </div>
       </div>
 
       {/* Contract Metadata Panel */}
       <div style={{
-        background: 'rgba(0, 0, 0, 0.4)',
-        border: '1px solid var(--border-glass)',
+        background: 'var(--bg-inner-box)',
+        border: '1px solid var(--border-color)',
         borderRadius: 'var(--radius-sm)',
         padding: '1rem 1.25rem',
         marginBottom: '1.5rem',
@@ -82,8 +82,8 @@ export const ContractEvents: React.FC = () => {
         gap: '1rem'
       }}>
         <div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>DEPLOYED SOROBAN CONTRACT ID (TESTNET)</div>
-          <div className="font-mono" style={{ fontSize: '0.88rem', color: '#67E8F9', wordBreak: 'break-all', marginTop: '0.2rem' }}>
+          <div style={{ fontSize: '0.78rem', color: 'var(--text-main)', fontWeight: 800 }}>DEPLOYED SOROBAN CONTRACT ID</div>
+          <div className="font-mono" style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text-main)', wordBreak: 'break-all', marginTop: '0.2rem' }}>
             {SOROBAN_TESTNET_CONTRACT_ID}
           </div>
         </div>
@@ -101,10 +101,10 @@ export const ContractEvents: React.FC = () => {
 
       {/* Events Feed */}
       {events.length === 0 ? (
-        <div style={{ padding: '3rem 1rem', textAlign: 'center', color: 'var(--text-dim)', background: 'rgba(0, 0, 0, 0.2)', borderRadius: 'var(--radius-sm)', border: '1px dashed var(--border-glass)' }}>
-          <Clock size={32} style={{ marginBottom: '0.5rem', opacity: 0.5 }} />
-          <p style={{ fontSize: '0.95rem', fontWeight: 600 }}>No live contract events emitted yet.</p>
-          <p style={{ fontSize: '0.82rem', marginTop: '0.25rem' }}>
+        <div style={{ padding: '3rem 1rem', textAlign: 'center', color: 'var(--text-main)', background: 'var(--bg-inner-box)', borderRadius: 'var(--radius-sm)', border: '1px dashed var(--border-color)' }}>
+          <Clock size={32} style={{ marginBottom: '0.5rem', opacity: 0.6 }} />
+          <p style={{ fontSize: '0.95rem', fontWeight: 700 }}>No live contract events emitted yet.</p>
+          <p style={{ fontSize: '0.82rem', marginTop: '0.25rem', opacity: 0.9 }}>
             Execute a Soroban contract call or click <strong>"Emit Live Contract Event"</strong> to stream real-time events!
           </p>
         </div>
@@ -114,8 +114,8 @@ export const ContractEvents: React.FC = () => {
             <div
               key={evt.id}
               style={{
-                background: 'rgba(10, 14, 23, 0.7)',
-                border: '1px solid var(--border-glass)',
+                background: 'var(--bg-inner-box)',
+                border: '1px solid var(--border-color)',
                 borderRadius: 'var(--radius-sm)',
                 padding: '1rem 1.25rem',
                 display: 'flex',
@@ -126,33 +126,34 @@ export const ContractEvents: React.FC = () => {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                  <Code size={16} color="#8B5CF6" />
-                  <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#F3F4F6' }}>
-                    Topic: <code style={{ color: '#FDE047', background: 'rgba(245, 158, 11, 0.15)', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>{evt.topic}</code>
+                  <Code size={16} color="var(--text-main)" />
+                  <span style={{ fontWeight: 800, fontSize: '0.9rem', color: 'var(--text-main)' }}>
+                    Topic: <code style={{ color: 'var(--text-main)', background: 'var(--primary-light)', padding: '0.15rem 0.4rem', borderRadius: '4px' }}>{evt.topic}</code>
                   </span>
                   <span className={`badge ${evt.type === 'REWARD_EVENT' ? 'badge-gold' : evt.type === 'TIP_EVENT' ? 'badge-purple' : 'badge-cyan'}`} style={{ fontSize: '0.65rem' }}>
                     {evt.type}
                   </span>
                 </div>
-                <span style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>{evt.timestamp}</span>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-main)', fontWeight: 600 }}>{evt.timestamp}</span>
               </div>
 
               {/* JSON Payload */}
               <div style={{
-                background: 'rgba(0, 0, 0, 0.6)',
+                background: 'var(--bg-card)',
                 padding: '0.65rem 0.85rem',
                 borderRadius: 'var(--radius-sm)',
-                border: '1px solid rgba(255, 255, 255, 0.05)',
+                border: '1px solid var(--border-color)',
                 fontFamily: 'var(--font-mono)',
-                fontSize: '0.78rem',
-                color: '#A7F3D0',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                color: 'var(--text-main)',
                 overflowX: 'auto'
               }}>
                 {evt.payload}
               </div>
 
               {/* Tx Hash Link */}
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-main)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600 }}>
                 <div>
                   Tx Hash:{' '}
                   <a
@@ -160,13 +161,13 @@ export const ContractEvents: React.FC = () => {
                     target="_blank"
                     rel="noreferrer"
                     className="font-mono"
-                    style={{ color: '#06B6D4', textDecoration: 'none' }}
+                    style={{ color: 'var(--text-main)', textDecoration: 'underline', fontWeight: 700 }}
                   >
                     {evt.txHash.substring(0, 16)}...{evt.txHash.substring(evt.txHash.length - 8)}
                     <ExternalLink size={10} style={{ marginLeft: '3px', display: 'inline' }} />
                   </a>
                 </div>
-                <span style={{ color: '#10B981', fontWeight: 600 }}>Confirmed on Testnet</span>
+                <span style={{ fontWeight: 700 }}>Confirmed on Testnet</span>
               </div>
             </div>
           ))}
