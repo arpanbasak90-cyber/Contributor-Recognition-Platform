@@ -17,6 +17,7 @@
 ### 🔗 Project Links
 
 [![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-contributor--recognition--platform.vercel.app-10B981?style=for-the-badge)](https://contributor-recognition-platform.vercel.app)
+[![Demo Video](https://img.shields.io/badge/🎬_Demo_Video-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/XfzTyx6P_SU)
 [![GitHub Repo](https://img.shields.io/badge/📁_GitHub_Repository-Contributor--Recognition--Platform-181717?style=for-the-badge&logo=github)](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git)
 
 </div>
@@ -110,6 +111,7 @@
 
 | Asset | Link / Value |
 | :--- | :--- |
+| **Demo Video Link** | [`https://youtu.be/XfzTyx6P_SU`](https://youtu.be/XfzTyx6P_SU) |
 | **Live Vercel Application** | [`https://contributor-recognition-platform.vercel.app`](https://contributor-recognition-platform.vercel.app) |
 | **GitHub Repository** | [`https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git`](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git) |
 | **Deployed Soroban Contract Address** | [`CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`](https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC) |
