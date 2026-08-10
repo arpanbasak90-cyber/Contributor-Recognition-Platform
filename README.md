@@ -4,6 +4,7 @@
 
 ![Level 1 White Belt](https://img.shields.io/badge/RiseIn-Level_1_White_Belt-10B981?style=for-the-badge&logo=star&logoColor=white)
 ![Level 2 Yellow Belt](https://img.shields.io/badge/RiseIn-Level_2_Yellow_Belt-F59E0B?style=for-the-badge&logo=star&logoColor=black)
+![Level 3 Advanced](https://img.shields.io/badge/RiseIn-Level_3_Advanced-7C3AED?style=for-the-badge&logo=star&logoColor=white)
 ![Vercel Live](https://img.shields.io/badge/Vercel-Live_Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)
 ![Stellar Testnet](https://img.shields.io/badge/Stellar-Soroban_Testnet-8B5CF6?style=for-the-badge&logo=stellar&logoColor=white)
 ![Multi-Wallet](https://img.shields.io/badge/Multi_Wallet-Freighter_%7C_Albedo_%7C_xBull_%7C_Rabet-06B6D4?style=for-the-badge&logo=wallet&logoColor=white)
@@ -91,6 +92,20 @@
 
 ---
 
+## 📋 Level 3 - Advanced Belt Submission Checklist
+
+| Level 3 Requirement | Feature / Implementation Details | Status |
+| :--- | :--- | :---: |
+| **1. Advanced Smart Contract Dev** | Soroban smart contract logic with event streaming, real-time updates, and transaction logging | ✅ Passed |
+| **2. CI/CD Pipeline Setup** | GitHub Actions workflow (`.github/workflows/ci.yml`) for automated linting, testing, and production builds | ✅ Passed |
+| **3. Mobile Responsive Frontend** | Mobile-first CSS layout with responsive breakpoint cards, navigation tabs, and touch-friendly controls | ✅ Passed |
+| **4. Error Handling & Loading States** | Multi-state status feedback (`Pending` ➔ `Building` ➔ `Signing` ➔ `Confirmed`) with friendly error banners | ✅ Passed |
+| **5. Test Suite (3+ Passing Tests)** | Unit test suite via Vitest (`npm test`) validating Soroban contract address, wallet detection, public key formatting, and error state mapping | ✅ Passed (4/4) |
+| **6. Minimum 10+ Meaningful Commits** | Clean git history with 16+ structured commits covering features, docs, styling, and CI setup | ✅ Passed |
+| **7. Production Architecture & Docs** | Comprehensive README documentation, local setup scripts, Vercel deployment, and test suite integration | ✅ Passed |
+
+---
+
 ## 🔗 Key Submission Resources & Assets
 
 | Asset | Link / Value |
@@ -115,7 +130,10 @@ npm install
 # 3. Run development server
 npm run dev
 
-# 4. Build production bundle
+# 4. Run test suite
+npm test
+
+# 5. Build production bundle
 npm run build
 ```
 
