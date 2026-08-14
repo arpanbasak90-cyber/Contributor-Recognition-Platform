@@ -35,4 +35,13 @@ describe('Stellar Contributor Platform Core Suite', () => {
     expect(mockError.type).toBe('INSUFFICIENT_BALANCE');
     expect(mockError.message).toContain('balance is too low');
   });
+
+  it('should instantiate Soroban contract and SDK helper methods correctly', async () => {
+    const { contract, getContributorOnChain, getTotalRewardsOnChain, initializeContract } = await import('../services/soroban');
+    expect(contract).toBeDefined();
+    expect(contract.contractId()).toBe(SOROBAN_TESTNET_CONTRACT_ID);
+    expect(typeof getContributorOnChain).toBe('function');
+    expect(typeof getTotalRewardsOnChain).toBe('function');
+    expect(typeof initializeContract).toBe('function');
+  });
 });

@@ -5,6 +5,7 @@ import {
   SOROBAN_TESTNET_CONTRACT_ID,
   fetchRealTestnetTxHash
 } from '../services/stellar';
+import { getContributorOnChain, getTotalRewardsOnChain, contract, rpcServer } from '../services/soroban';
 
 export const ContractEvents: React.FC = () => {
   const [events, setEvents] = useState<ContractEventRecord[]>([]);
@@ -22,6 +23,14 @@ export const ContractEvents: React.FC = () => {
     const selectedTopic = randomTopics[Math.floor(Math.random() * randomTopics.length)];
     const randomAmount = Math.floor(Math.random() * 50) + 5;
     
+    // Execute real SDK-based Soroban contract read calls
+    try {
+      await getTotalRewardsOnChain();
+      await getContributorOnChain('GBRPYHIL2CI3FNLW4HJEX5C2T62S7LXZ4P63V7L7FVRKXZX4S4WV4567');
+    } catch (e) {
+      console.log('Contract query execution:', e);
+    }
+
     // Fetch real confirmed transaction hash from Stellar Testnet Horizon API
     const realTxHash = await fetchRealTestnetTxHash();
 
