@@ -7,6 +7,8 @@ import { ContributorList } from './components/ContributorList';
 import { TippingForm } from './components/TippingForm';
 import { TransactionHistory } from './components/TransactionHistory';
 import { ContractEvents } from './components/ContractEvents';
+import { AnalyticsDashboard } from './components/AnalyticsDashboard';
+import { FeedbackWidget } from './components/FeedbackWidget';
 import {
   WalletState,
   TransactionRecord,
@@ -14,7 +16,9 @@ import {
   NetworkId,
   fetchXlmBalance
 } from './services/stellar';
-import { Award, Send, History, Sparkles, Info, Activity } from 'lucide-react';
+import { trackEvent, initSession } from './services/analytics';
+import { Award, Send, History, Sparkles, Info, Activity, BarChart2 } from 'lucide-react';
+
 
 export const App: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -33,7 +37,10 @@ export const App: React.FC = () => {
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [selectedRecipient, setSelectedRecipient] = useState<{ name: string; publicKey: string } | null>(null);
-  const [activeTab, setActiveTab] = useState<'leaderboard' | 'tip' | 'events' | 'history'>('leaderboard');
+  const [activeTab, setActiveTab] = useState<'leaderboard' | 'tip' | 'events' | 'history' | 'analytics'>('leaderboard');
+
+  // Initialize session analytics on mount
+  useEffect(() => { initSession(); }, []);
 
   // Handle Theme switching
   useEffect(() => {
@@ -52,6 +59,9 @@ export const App: React.FC = () => {
 
   const handleWalletConnected = (newState: WalletState) => {
     setWalletState(newState);
+    if (newState.connected && newState.provider) {
+      trackEvent('WALLET_CONNECTED', { provider: newState.provider });
+    }
   };
 
   const handleDemoConnect = async () => {
@@ -71,9 +81,11 @@ export const App: React.FC = () => {
       isLoading: false,
       error: null
     });
+    trackEvent('DEMO_CONNECT');
   };
 
   const handleDisconnect = () => {
+    trackEvent('WALLET_DISCONNECTED');
     setWalletState({
       connected: false,
       publicKey: null,
@@ -99,6 +111,7 @@ export const App: React.FC = () => {
 
   const handleAddContributor = (newContrib: Contributor) => {
     setContributors((prev) => [newContrib, ...prev]);
+    trackEvent('CONTRIBUTOR_ADDED', { name: newContrib.name });
   };
 
   const handleRemoveContributor = (id: string) => {
@@ -112,9 +125,15 @@ export const App: React.FC = () => {
 
   const handleTransactionComplete = (record: TransactionRecord) => {
     setTransactions((prev) => [record, ...prev]);
+    trackEvent('TIP_SENT', { amount: parseFloat(record.amount), recipient: record.recipient.slice(0, 8) });
     setTimeout(() => {
       handleRefreshBalance();
     }, 1000);
+  };
+
+  const handleTabChange = (tab: typeof activeTab) => {
+    setActiveTab(tab);
+    trackEvent('TAB_VIEWED', { tab });
   };
 
   const handleClearHistory = () => {
@@ -171,16 +190,18 @@ export const App: React.FC = () => {
             <div className="tabs-header">
               <button
                 className={`tab-btn ${activeTab === 'leaderboard' ? 'active' : ''}`}
-                onClick={() => setActiveTab('leaderboard')}
+                onClick={() => handleTabChange('leaderboard')}
+                id="tab-leaderboard"
               >
-                <Award size={18} /> Contributor Leaderboard ({contributors.length})
+                <Award size={18} /> Contributors ({contributors.length})
               </button>
 
               <button
                 className={`tab-btn ${activeTab === 'tip' ? 'active' : ''}`}
-                onClick={() => setActiveTab('tip')}
+                onClick={() => handleTabChange('tip')}
+                id="tab-tip"
               >
-                <Send size={18} /> Soroban Contract & Rewards
+                <Send size={18} /> Send Reward
                 {selectedRecipient && (
                   <span className="badge badge-cyan" style={{ fontSize: '0.65rem' }}>Selected</span>
                 )}
@@ -188,16 +209,26 @@ export const App: React.FC = () => {
 
               <button
                 className={`tab-btn ${activeTab === 'events' ? 'active' : ''}`}
-                onClick={() => setActiveTab('events')}
+                onClick={() => handleTabChange('events')}
+                id="tab-events"
               >
-                <Activity size={18} /> Real-Time Contract Events
+                <Activity size={18} /> Contract Events
               </button>
 
               <button
                 className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`}
-                onClick={() => setActiveTab('history')}
+                onClick={() => handleTabChange('history')}
+                id="tab-history"
               >
-                <History size={18} /> Session Transaction Log ({transactions.length})
+                <History size={18} /> Tx Log ({transactions.length})
+              </button>
+
+              <button
+                className={`tab-btn ${activeTab === 'analytics' ? 'active' : ''}`}
+                onClick={() => handleTabChange('analytics')}
+                id="tab-analytics"
+              >
+                <BarChart2 size={18} /> Analytics
               </button>
             </div>
 
@@ -229,9 +260,16 @@ export const App: React.FC = () => {
                 onClearHistory={handleClearHistory}
               />
             )}
+
+            {activeTab === 'analytics' && (
+              <AnalyticsDashboard />
+            )}
           </div>
         )}
       </main>
+
+      {/* Floating Feedback Widget */}
+      <FeedbackWidget />
 
       {/* Footer */}
       <footer style={{
@@ -246,6 +284,7 @@ export const App: React.FC = () => {
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             Built on <strong>Stellar Blockchain</strong> • Open Source Contributor Platform
+            <span style={{ marginLeft: '0.75rem', background: 'rgba(52,211,153,0.15)', border: '1px solid rgba(52,211,153,0.3)', borderRadius: '999px', padding: '0.1rem 0.55rem', fontSize: '0.72rem', fontWeight: 700, color: 'var(--accent-green)' }}>🟢 Level 4 MVP</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
             Powered by <Sparkles size={14} color="var(--primary)" /> <strong>Soroban Smart Contracts & Stellar API</strong>
