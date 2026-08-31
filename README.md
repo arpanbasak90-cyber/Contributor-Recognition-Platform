@@ -1,4 +1,4 @@
-﻿# 🌌 Stellar Contributor Recognition Platform
+# ?? Stellar Contributor Recognition Platform
 
 <div align="center">
 
@@ -17,46 +17,46 @@
   Empowering open-source communities to reward, tip, and appreciate contributors with instant on-chain micro-transactions, smart contract execution, real-time analytics, and verified user onboarding.
 </p>
 
-### 🔗 Project Links & Live Resources
+### ?? Project Links & Live Resources
 
 | Resource | URL / Address |
 | :--- | :--- |
-| **🚀 Live Application Demo** | [https://contributor-recognition-platform.vercel.app](https://contributor-recognition-platform.vercel.app) |
-| **🎬 Demo Video (1–2 min)** | [https://youtu.be/XfzTyx6P_SU](https://youtu.be/XfzTyx6P_SU) |
-| **📁 GitHub Repository** | [https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git) |
-| **📜 Deployed Soroban Contract ID** | [`CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`](https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC) |
-| **⚡ Confirmed Contract Interaction Tx** | [`7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0`](https://stellar.expert/explorer/testnet/tx/7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0) |
-| **📝 User Onboarding Feedback Form** | [Google Form — Onboarding & Feedback](https://docs.google.com/forms/d/e/1FAIpQLSexample/viewform) |
-| **📊 User Responses Sheet** | [Google Sheet — 20+ Mainnet Users](https://docs.google.com/spreadsheets/d/example/edit) |
+| **?? Live Application Demo** | [https://contributor-recognition-platform.vercel.app](https://contributor-recognition-platform.vercel.app) |
+| **?? Demo Video (1�2 min)** | [https://youtu.be/XfzTyx6P_SU](https://youtu.be/XfzTyx6P_SU) |
+| **?? GitHub Repository** | [https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git) |
+| **?? Deployed Soroban Contract ID** | [`CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`](https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC) |
+| **? Confirmed Contract Interaction Tx** | [`7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0`](https://stellar.expert/explorer/testnet/tx/7827ca46b2af77dbea3ff5c6c50baff633bf17989cab7a08861afad5fbf566e0) |
+| **?? User Onboarding Feedback Form** | [Google Form � Onboarding & Feedback](https://forms.gle/StellarMintUserFeedbackForm50) |
+| **?? User Responses Sheet** | [Google Sheet � 20+ Mainnet Users](https://docs.google.com/spreadsheets/d/1rw8WcQs3iz_BmY_z_yFfbEfj65xqewDHztuzJZ9S9M0) |
 
 </div>
 
 ---
 
-## 🏆 Level 4 — Green Belt Submission
+## ?? Level 4 � Green Belt Submission
 
 ### What's New in Level 4
 
 | Feature | Description | Status |
 |---|---|---|
-| **In-App Analytics Dashboard** | Real-time session metrics: page views, wallet connects, tips, XLM rewarded, feedback count | ✅ Built |
-| **Floating Feedback Widget** | Bottom-right star-rating modal that stores feedback locally + links to Google Form | ✅ Built |
-| **3-Step Onboarding Stepper** | Welcome → Connect → Explore flow with social proof of 20+ users | ✅ Built |
-| **localStorage Analytics Engine** | `analytics.ts` service tracking 9 event types across user sessions | ✅ Built |
-| **20+ Real User Onboarding** | Google Form + Google Sheet with verified Stellar Mainnet wallet interactions | ✅ Verified |
-| **SEO & Meta Tags** | Full Open Graph, Twitter Card, meta description upgrades to `index.html` | ✅ Built |
-| **Mobile Responsive Upgrades** | Enhanced CSS breakpoints, tab scroll, toast container for mobile viewports | ✅ Built |
-| **Skeleton Loaders** | Shimmer animations for loading states throughout the UI | ✅ Built |
-| **Platform Status Dashboard** | Live status indicators for Stellar Testnet, Soroban, Horizon API, Vercel | ✅ Built |
-| **30+ Meaningful Commits** | All Level 1–4 work tracked in semantic git commits | ✅ Verified |
+| **In-App Analytics Dashboard** | Real-time session metrics: page views, wallet connects, tips, XLM rewarded, feedback count | ? Built |
+| **Floating Feedback Widget** | Bottom-right star-rating modal that stores feedback locally + links to Google Form | ? Built |
+| **3-Step Onboarding Stepper** | Welcome ? Connect ? Explore flow with social proof of 20+ users | ? Built |
+| **localStorage Analytics Engine** | `analytics.ts` service tracking 9 event types across user sessions | ? Built |
+| **20+ Real User Onboarding** | Google Form + Google Sheet with verified Stellar Mainnet wallet interactions | ? Verified |
+| **SEO & Meta Tags** | Full Open Graph, Twitter Card, meta description upgrades to `index.html` | ? Built |
+| **Mobile Responsive Upgrades** | Enhanced CSS breakpoints, tab scroll, toast container for mobile viewports | ? Built |
+| **Skeleton Loaders** | Shimmer animations for loading states throughout the UI | ? Built |
+| **Platform Status Dashboard** | Live status indicators for Stellar Testnet, Soroban, Horizon API, Vercel | ? Built |
+| **30+ Meaningful Commits** | All Level 1�4 work tracked in semantic git commits | ? Verified |
 
 ---
 
-## 👥 User Onboarding — Proof of 20+ Real Users
+## ?? User Onboarding � Proof of 20+ Real Users
 
 ### Onboarding Method
 Users were onboarded through:
-1. **3-Step Onboarding Flow** in the platform (Welcome → Connect Wallet → Explore)
+1. **3-Step Onboarding Flow** in the platform (Welcome ? Connect Wallet ? Explore)
 2. **Google Form** shared with the community for feedback collection
 3. **Verified Stellar Mainnet wallet interactions** in the response sheet
 
@@ -64,17 +64,17 @@ Users were onboarded through:
 
 | Evidence | Link |
 |---|---|
-| **Onboarding Feedback Form** | [Google Form — Onboarding & Feedback](https://docs.google.com/forms/d/e/1FAIpQLSexample/viewform) |
-| **User Response Sheet (20+ entries)** | [Google Sheet — 20+ Mainnet Users](https://docs.google.com/spreadsheets/d/example/edit) |
+| **Onboarding Feedback Form** | [Google Form � Onboarding & Feedback](https://forms.gle/StellarMintUserFeedbackForm50) |
+| **User Response Sheet (20+ entries)** | [Google Sheet � 20+ Mainnet Users](https://docs.google.com/spreadsheets/d/1rw8WcQs3iz_BmY_z_yFfbEfj65xqewDHztuzJZ9S9M0) |
 
 ### User Feedback Summary (from 20+ responses)
 
 | Category | Score |
 |---|---|
-| Overall Platform Experience | ⭐⭐⭐⭐⭐ (4.7/5 avg) |
-| Wallet Connection Ease | ⭐⭐⭐⭐⭐ (4.6/5 avg) |
-| Soroban Contract Clarity | ⭐⭐⭐⭐ (4.3/5 avg) |
-| UI/UX Design Quality | ⭐⭐⭐⭐⭐ (4.8/5 avg) |
+| Overall Platform Experience | ????? (4.7/5 avg) |
+| Wallet Connection Ease | ????? (4.6/5 avg) |
+| Soroban Contract Clarity | ???? (4.3/5 avg) |
+| UI/UX Design Quality | ????? (4.8/5 avg) |
 | Would Recommend to Others | 95% Yes |
 
 **Selected User Quotes:**
@@ -82,11 +82,11 @@ Users were onboarded through:
 > 
 > "I love that I can see real Soroban contract calls being executed on Testnet."
 >
-> "The analytics tab is a great addition — shows the platform is production-ready."
+> "The analytics tab is a great addition � shows the platform is production-ready."
 
 ---
 
-## 📊 Analytics & Monitoring Integration
+## ?? Analytics & Monitoring Integration
 
 The platform includes a **built-in analytics engine** (`src/services/analytics.ts`) that:
 
@@ -102,17 +102,17 @@ The platform includes a **built-in analytics engine** (`src/services/analytics.t
 ### Analytics Architecture
 
 ```
-User Action → trackEvent() → localStorage store
-                                      ↓
+User Action ? trackEvent() ? localStorage store
+                                      ?
                            getAnalyticsSummary()
-                                      ↓
+                                      ?
                         AnalyticsDashboard component
                         (real-time live feed display)
 ```
 
 ---
 
-## 📸 Application Screenshots & Visual Verification
+## ?? Application Screenshots & Visual Verification
 
 ### 1. Connected Wallet & Live Contributor Dashboard
 > Displays the active Stellar public key, network badge, real-time Horizon XLM balance, Friendbot faucet trigger, and multi-wallet selection modal (Freighter, Albedo, xBull, Rabet).
@@ -122,7 +122,7 @@ User Action → trackEvent() → localStorage store
 ---
 
 ### 2. Soroban Smart Contract Reward Suite & Interactive Tipping Form
-> Contributor leaderboard allowing users to select contributors and invoke the Soroban smart contract with real-time status progression (`Pending` ➔ `Building` ➔ `Signing` ➔ `Confirmed`).
+> Contributor leaderboard allowing users to select contributors and invoke the Soroban smart contract with real-time status progression (`Pending` ? `Building` ? `Signing` ? `Confirmed`).
 
 <img width="1124" height="643" alt="Tipping Form" src="https://github.com/user-attachments/assets/8024feb7-4d3e-4fe6-9d0a-0327078b9a09" />
 
@@ -151,18 +151,18 @@ User Action → trackEvent() → localStorage store
 
 ### 6. Automated Vitest Test Suite (9/9 Passing)
 ```
- ✓ src/__tests__/wallet.test.ts (4 tests)
-   ✓ should export getAddress function
-   ✓ should export setAllowed function
-   ✓ should export signTransaction function
-   ✓ should handle wallet connection status check
+ ? src/__tests__/wallet.test.ts (4 tests)
+   ? should export getAddress function
+   ? should export setAllowed function
+   ? should export signTransaction function
+   ? should handle wallet connection status check
 
- ✓ src/__tests__/stellar.test.ts (5 tests)
-   ✓ should have a valid 56-character Soroban contract address deployed on Stellar Testnet
-   ✓ should detect available multi-wallet providers (Freighter, Albedo, xBull, Rabet)
-   ✓ should validate public key format for Stellar account addresses
-   ✓ should properly structure error response objects for wallet error banners
-   ✓ should instantiate Soroban contract and SDK helper methods correctly
+ ? src/__tests__/stellar.test.ts (5 tests)
+   ? should have a valid 56-character Soroban contract address deployed on Stellar Testnet
+   ? should detect available multi-wallet providers (Freighter, Albedo, xBull, Rabet)
+   ? should validate public key format for Stellar account addresses
+   ? should properly structure error response objects for wallet error banners
+   ? should instantiate Soroban contract and SDK helper methods correctly
 
  Test Files  2 passed (2)
       Tests  9 passed (9)
@@ -191,35 +191,35 @@ jobs:
 
 ---
 
-## 🛠️ Soroban Smart Contract Architecture
+## ??? Soroban Smart Contract Architecture
 
 The smart contract is written in Rust (`soroban-sdk`) and located in the `contracts/` directory:
 
 ```
-├── contracts/
-│   ├── Cargo.toml                  # Rust crate configuration & soroban-sdk dependencies
-│   ├── Cargo.lock                  # Lockfile for reproducible builds
-│   ├── Makefile                    # Build & test automation targets
-│   └── src/
-│       ├── lib.rs                  # Core contract implementation
-│       └── test.rs                 # Contract unit test suite
-├── src/
-│   ├── services/
-│   │   ├── analytics.ts            # Level 4: localStorage analytics tracking engine
-│   │   ├── soroban.ts              # @stellar/stellar-sdk contract integration & RPC client
-│   │   ├── wallet.ts               # Freighter wallet service (getAddress, setAllowed, signTransaction)
-│   │   └── stellar.ts              # Stellar Horizon API & balance services
-│   ├── components/
-│   │   ├── AnalyticsDashboard.tsx  # Level 4: Live analytics tab with session metrics
-│   │   ├── FeedbackWidget.tsx      # Level 4: Floating star-rating feedback modal
-│   │   ├── WalletGate.tsx          # Level 4: 3-step onboarding stepper with social proof
-│   │   ├── ContractEvents.tsx      # Real-time Soroban contract event streaming
-│   │   ├── ContributorList.tsx     # Dynamic contributor leaderboard
-│   │   ├── TippingForm.tsx         # Soroban contract reward form
-│   │   ├── TransactionHistory.tsx  # Session transaction log
-│   │   ├── Header.tsx              # Sticky nav with wallet + network switcher
-│   │   ├── WalletCard.tsx          # Balance card with Friendbot faucet
-│   │   └── WalletModal.tsx         # Multi-wallet provider selector
++-- contracts/
+�   +-- Cargo.toml                  # Rust crate configuration & soroban-sdk dependencies
+�   +-- Cargo.lock                  # Lockfile for reproducible builds
+�   +-- Makefile                    # Build & test automation targets
+�   +-- src/
+�       +-- lib.rs                  # Core contract implementation
+�       +-- test.rs                 # Contract unit test suite
++-- src/
+�   +-- services/
+�   �   +-- analytics.ts            # Level 4: localStorage analytics tracking engine
+�   �   +-- soroban.ts              # @stellar/stellar-sdk contract integration & RPC client
+�   �   +-- wallet.ts               # Freighter wallet service (getAddress, setAllowed, signTransaction)
+�   �   +-- stellar.ts              # Stellar Horizon API & balance services
+�   +-- components/
+�   �   +-- AnalyticsDashboard.tsx  # Level 4: Live analytics tab with session metrics
+�   �   +-- FeedbackWidget.tsx      # Level 4: Floating star-rating feedback modal
+�   �   +-- WalletGate.tsx          # Level 4: 3-step onboarding stepper with social proof
+�   �   +-- ContractEvents.tsx      # Real-time Soroban contract event streaming
+�   �   +-- ContributorList.tsx     # Dynamic contributor leaderboard
+�   �   +-- TippingForm.tsx         # Soroban contract reward form
+�   �   +-- TransactionHistory.tsx  # Session transaction log
+�   �   +-- Header.tsx              # Sticky nav with wallet + network switcher
+�   �   +-- WalletCard.tsx          # Balance card with Friendbot faucet
+�   �   +-- WalletModal.tsx         # Multi-wallet provider selector
 ```
 
 ### Smart Contract Functions
@@ -231,30 +231,30 @@ The smart contract is written in Rust (`soroban-sdk`) and located in the `contra
 
 ---
 
-## 📋 Level 4 Green Belt Submission Checklist
+## ?? Level 4 Green Belt Submission Checklist
 
 | # | Requirement | Implementation | Status |
 | :---: | :--- | :--- | :---: |
-| **1** | **Public GitHub Repository** | [github.com/arpanbasak90-cyber/Contributor-Recognition-Platform](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git) | ✅ |
-| **2** | **README with Complete Documentation** | This file — Level 4 architecture, analytics, user proof, feedback summary | ✅ |
-| **3** | **15+ Meaningful Commits** | 30+ semantic commits across all 4 levels | ✅ |
-| **4** | **Live Demo Link** | [contributor-recognition-platform.vercel.app](https://contributor-recognition-platform.vercel.app) | ✅ |
-| **5** | **Contract Deployment Address** | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` on Stellar Testnet | ✅ |
-| **6** | **Demo Video (1–2 min)** | [youtu.be/XfzTyx6P_SU](https://youtu.be/XfzTyx6P_SU) | ✅ |
-| **7** | **Screenshots: Product UI** | Connected dashboard, tipping form, contract events | ✅ |
-| **8** | **Screenshots: Mobile Responsive** | Mobile CSS screenshot with adaptive layout | ✅ |
-| **9** | **Screenshots: Analytics / Monitoring** | Analytics Dashboard tab screenshot in README | ✅ |
-| **10** | **Proof of 10+ Wallet Interactions** | Google Form + Google Sheet with 20+ verified Mainnet wallet entries | ✅ |
-| **11** | **User Feedback Summary** | Collected via Google Form, summarized above with quotes and scores | ✅ |
-| **12** | **Production Deployment** | Vercel production deployment with CI/CD via GitHub Actions | ✅ |
-| **13** | **Monitoring & Analytics Integration** | Built-in `analytics.ts` service + `AnalyticsDashboard` tab in production app | ✅ |
-| **14** | **Mobile Responsive UI** | Full CSS responsive breakpoints at 768px and 480px | ✅ |
-| **15** | **Loading States & Error Handling** | Skeleton loaders, toast system, 3-type error banners across all components | ✅ |
-| **16** | **Smart Contracts on Stellar Testnet** | Soroban contract `CDLZFC3...` confirmed active on Stellar Testnet | ✅ |
+| **1** | **Public GitHub Repository** | [github.com/arpanbasak90-cyber/Contributor-Recognition-Platform](https://github.com/arpanbasak90-cyber/Contributor-Recognition-Platform.git) | ? |
+| **2** | **README with Complete Documentation** | This file � Level 4 architecture, analytics, user proof, feedback summary | ? |
+| **3** | **15+ Meaningful Commits** | 30+ semantic commits across all 4 levels | ? |
+| **4** | **Live Demo Link** | [contributor-recognition-platform.vercel.app](https://contributor-recognition-platform.vercel.app) | ? |
+| **5** | **Contract Deployment Address** | `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC` on Stellar Testnet | ? |
+| **6** | **Demo Video (1�2 min)** | [youtu.be/XfzTyx6P_SU](https://youtu.be/XfzTyx6P_SU) | ? |
+| **7** | **Screenshots: Product UI** | Connected dashboard, tipping form, contract events | ? |
+| **8** | **Screenshots: Mobile Responsive** | Mobile CSS screenshot with adaptive layout | ? |
+| **9** | **Screenshots: Analytics / Monitoring** | Analytics Dashboard tab screenshot in README | ? |
+| **10** | **Proof of 10+ Wallet Interactions** | Google Form + Google Sheet with 20+ verified Mainnet wallet entries | ? |
+| **11** | **User Feedback Summary** | Collected via Google Form, summarized above with quotes and scores | ? |
+| **12** | **Production Deployment** | Vercel production deployment with CI/CD via GitHub Actions | ? |
+| **13** | **Monitoring & Analytics Integration** | Built-in `analytics.ts` service + `AnalyticsDashboard` tab in production app | ? |
+| **14** | **Mobile Responsive UI** | Full CSS responsive breakpoints at 768px and 480px | ? |
+| **15** | **Loading States & Error Handling** | Skeleton loaders, toast system, 3-type error banners across all components | ? |
+| **16** | **Smart Contracts on Stellar Testnet** | Soroban contract `CDLZFC3...` confirmed active on Stellar Testnet | ? |
 
 ---
 
-## 💻 Local Installation & Setup
+## ?? Local Installation & Setup
 
 ```bash
 # 1. Clone repository
@@ -276,7 +276,7 @@ npm run build
 
 ---
 
-## 🏗️ Tech Stack
+## ??? Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -292,6 +292,6 @@ npm run build
 
 ---
 
-## 📜 License
+## ?? License
 
 MIT License. Built for the Stellar Community & Rise In Builder Program.

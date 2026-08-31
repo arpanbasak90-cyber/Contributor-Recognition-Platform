@@ -12,7 +12,7 @@ const STEPS = [
   { label: 'Explore' },
 ];
 
-const FEEDBACK_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSexample/viewform';
+const FEEDBACK_FORM_URL = 'https://forms.gle/StellarMintUserFeedbackForm50';
 
 export const WalletGate: React.FC<WalletGateProps> = ({ onOpenWalletModal, onDemoConnect }) => {
   const [step, setStep] = useState(0); // 0 = Welcome, 1 = Connect

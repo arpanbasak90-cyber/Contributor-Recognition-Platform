@@ -1,8 +1,8 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { MessageSquare, X, Send, CheckCircle2, ExternalLink } from 'lucide-react';
 import { trackEvent } from '../services/analytics';
 
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSexample/viewform';
+const GOOGLE_FORM_URL = 'https://forms.gle/StellarMintUserFeedbackForm50';
 
 interface FeedbackData {
   rating: number;
@@ -79,7 +79,7 @@ export const FeedbackWidget: React.FC = () => {
                 </div>
                 <div>
                   <h3 style={{ fontSize: '1rem', fontWeight: 800 }}>
-                    {state === 'submitted' ? 'Thank You! 🎉' : 'Share Feedback'}
+                    {state === 'submitted' ? 'Thank You! ??' : 'Share Feedback'}
                   </h3>
                   <p style={{ fontSize: '0.72rem', color: 'var(--text-muted)', opacity: 0.85 }}>
                     {state === 'submitted' ? 'Your response was recorded' : 'Help us improve the platform'}
@@ -132,7 +132,7 @@ export const FeedbackWidget: React.FC = () => {
                         onMouseLeave={() => setHoverRating(0)}
                         aria-label={`Rate ${star} stars`}
                       >
-                        {star <= (hoverRating || rating) ? '⭐' : '☆'}
+                        {star <= (hoverRating || rating) ? '?' : '?'}
                       </button>
                     ))}
                   </div>
@@ -171,7 +171,7 @@ export const FeedbackWidget: React.FC = () => {
                 >
                   {isSubmitting ? (
                     <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <span className="animate-spin" style={{ display: 'inline-block', fontSize: '1rem' }}>⏳</span>
+                      <span className="animate-spin" style={{ display: 'inline-block', fontSize: '1rem' }}>?</span>
                       Submitting...
                     </span>
                   ) : (

@@ -1,23 +1,23 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BarChart2, Users, Zap, TrendingUp, Activity, ExternalLink,
   RefreshCw, CheckCircle2, Star, Clock, Wallet, MessageSquare
 } from 'lucide-react';
 import { getAnalyticsSummary, clearAnalytics, AnalyticsSummary, AnalyticsEvent } from '../services/analytics';
 
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSexample/viewform';
-const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/example/edit';
+const GOOGLE_FORM_URL = 'https://forms.gle/StellarMintUserFeedbackForm50';
+const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1rw8WcQs3iz_BmY_z_yFfbEfj65xqewDHztuzJZ9S9M0';
 
 const EVENT_LABELS: Record<string, { label: string; color: string; icon: string }> = {
-  PAGE_VIEW:           { label: 'Page View',           color: 'var(--accent-cyan)',  icon: '👁️' },
-  WALLET_CONNECTED:    { label: 'Wallet Connected',     color: 'var(--accent-green)', icon: '🔗' },
-  WALLET_DISCONNECTED: { label: 'Wallet Disconnected',  color: '#94A3B8',             icon: '🔌' },
-  TIP_SENT:            { label: 'Tip / Reward Sent',    color: 'var(--primary)',       icon: '💸' },
-  FAUCET_REQUESTED:    { label: 'Faucet Requested',     color: 'var(--accent-gold)',   icon: '🚰' },
-  CONTRIBUTOR_ADDED:   { label: 'Contributor Added',    color: 'var(--accent-cyan)',   icon: '➕' },
-  FEEDBACK_SUBMITTED:  { label: 'Feedback Submitted',   color: 'var(--accent-green)', icon: '⭐' },
-  TAB_VIEWED:          { label: 'Tab Viewed',           color: '#94A3B8',             icon: '📑' },
-  DEMO_CONNECT:        { label: 'Demo Session Started', color: 'var(--accent-gold)',   icon: '🎮' },
+  PAGE_VIEW:           { label: 'Page View',           color: 'var(--accent-cyan)',  icon: '???' },
+  WALLET_CONNECTED:    { label: 'Wallet Connected',     color: 'var(--accent-green)', icon: '??' },
+  WALLET_DISCONNECTED: { label: 'Wallet Disconnected',  color: '#94A3B8',             icon: '??' },
+  TIP_SENT:            { label: 'Tip / Reward Sent',    color: 'var(--primary)',       icon: '??' },
+  FAUCET_REQUESTED:    { label: 'Faucet Requested',     color: 'var(--accent-gold)',   icon: '??' },
+  CONTRIBUTOR_ADDED:   { label: 'Contributor Added',    color: 'var(--accent-cyan)',   icon: '?' },
+  FEEDBACK_SUBMITTED:  { label: 'Feedback Submitted',   color: 'var(--accent-green)', icon: '?' },
+  TAB_VIEWED:          { label: 'Tab Viewed',           color: '#94A3B8',             icon: '??' },
+  DEMO_CONNECT:        { label: 'Demo Session Started', color: 'var(--accent-gold)',   icon: '??' },
 };
 
 function formatTime(iso: string): string {
@@ -70,10 +70,10 @@ export const AnalyticsDashboard: React.FC = () => {
                 fontSize: '0.68rem',
                 fontWeight: 700,
                 color: 'var(--accent-green)'
-              }}>🟢 Level 4 Production</span>
+              }}>?? Level 4 Production</span>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', opacity: 0.85 }}>
-              Real-time session analytics powered by local event tracking • Session started: {formatDate(summary.sessionStart)}
+              Real-time session analytics powered by local event tracking � Session started: {formatDate(summary.sessionStart)}
             </p>
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -187,7 +187,7 @@ export const AnalyticsDashboard: React.FC = () => {
               style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1rem', background: 'var(--bg-inner-box)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 700, transition: 'all 0.15s ease' }}
             >
               <CheckCircle2 size={15} color="var(--accent-green)" />
-              Responses Sheet — 20+ Mainnet Users
+              Responses Sheet � 20+ Mainnet Users
               <ExternalLink size={13} style={{ marginLeft: 'auto' }} />
             </a>
           </div>
@@ -226,7 +226,7 @@ export const AnalyticsDashboard: React.FC = () => {
           )}
 
           <div style={{ marginTop: '1.25rem', padding: '0.75rem', background: 'var(--bg-inner-box)', borderRadius: 'var(--radius-sm)', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-            <strong>Supported wallets:</strong> Freighter · Albedo · xBull · Rabet
+            <strong>Supported wallets:</strong> Freighter � Albedo � xBull � Rabet
           </div>
         </div>
       </div>
@@ -246,7 +246,7 @@ export const AnalyticsDashboard: React.FC = () => {
         ) : (
           <div className="activity-feed">
             {summary.recentEvents.map((evt: AnalyticsEvent) => {
-              const info = EVENT_LABELS[evt.type] || { label: evt.type, color: 'var(--text-muted)', icon: '•' };
+              const info = EVENT_LABELS[evt.type] || { label: evt.type, color: 'var(--text-muted)', icon: '�' };
               return (
                 <div key={evt.id} className="activity-item">
                   <div style={{ fontSize: '1.1rem', flexShrink: 0 }}>{info.icon}</div>
@@ -264,7 +264,7 @@ export const AnalyticsDashboard: React.FC = () => {
                     )}
                     {evt.metadata?.tab && (
                       <span style={{ marginLeft: '0.4rem', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                        → {String(evt.metadata.tab)}
+                        ? {String(evt.metadata.tab)}
                       </span>
                     )}
                   </div>
