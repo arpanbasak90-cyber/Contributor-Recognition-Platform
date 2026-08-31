@@ -13,6 +13,7 @@ import { PitchDeck } from './components/PitchDeck';
 import { LeaderboardPanel } from './components/LeaderboardPanel';
 import { OnboardingModal } from './components/OnboardingModal';
 import { FeeBumpPanel } from './components/FeeBumpPanel';
+import { FounderDashboard } from './components/FounderDashboard';
 import {
   WalletState,
   TransactionRecord,
@@ -21,7 +22,7 @@ import {
   fetchXlmBalance
 } from './services/stellar';
 import { trackEvent, initSession } from './services/analytics';
-import { Award, Send, History, Sparkles, Activity, BarChart2, Rocket, Trophy, Zap } from 'lucide-react';
+import { Award, Send, History, Sparkles, Activity, BarChart2, Rocket, Trophy, Zap, TrendingUp } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -40,7 +41,7 @@ export const App: React.FC = () => {
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [selectedRecipient, setSelectedRecipient] = useState<{ name: string; publicKey: string } | null>(null);
-  const [activeTab, setActiveTab] = useState<'leaderboard' | 'globalboard' | 'tip' | 'events' | 'history' | 'analytics' | 'pitch' | 'feebump'>('leaderboard');
+  const [activeTab, setActiveTab] = useState<'leaderboard' | 'globalboard' | 'tip' | 'events' | 'history' | 'analytics' | 'pitch' | 'feebump' | 'growth'>('leaderboard');
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   // Initialize session analytics on mount
@@ -226,6 +227,9 @@ export const App: React.FC = () => {
               <button className={`tab-btn ${activeTab === 'pitch' ? 'active' : ''}`} onClick={() => handleTabChange('pitch')} id="tab-pitch">
                 <Rocket size={18} /> Pitch Deck
               </button>
+              <button className={`tab-btn ${activeTab === 'growth' ? 'active' : ''}`} onClick={() => handleTabChange('growth')} id="tab-growth">
+                <TrendingUp size={18} /> Growth & PMF
+              </button>
             </div>
 
             {/* Tab Views */}
@@ -255,6 +259,7 @@ export const App: React.FC = () => {
             {activeTab === 'analytics' && <AnalyticsDashboard />}
             {activeTab === 'feebump' && <FeeBumpPanel />}
             {activeTab === 'pitch' && <PitchDeck />}
+            {activeTab === 'growth' && <FounderDashboard />}
           </div>
         )}
       </main>

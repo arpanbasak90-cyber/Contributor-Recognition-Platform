@@ -1,4 +1,4 @@
-﻿# 🌌 Stellar Contributor Recognition Platform
+# 🌌 Stellar Contributor Recognition Platform
 
 <div align="center">
 
@@ -27,11 +27,13 @@
 | **🔐 Security Review** | [SECURITY.md](./SECURITY.md) |
 | **📖 User Guide** | [docs/USER_GUIDE.md](./docs/USER_GUIDE.md) |
 | **✍️ Technical Blog** | [docs/TECHNICAL_BLOG.md](./docs/TECHNICAL_BLOG.md) |
+| **📈 Growth Report** | [docs/MONTHLY_GROWTH_REPORT.md](./docs/MONTHLY_GROWTH_REPORT.md) |
 | **📝 User Onboarding Form** | [Google Form — Name + Email + Wallet + Rating](https://forms.gle/StellarMintUserFeedbackForm50) |
 | **📊 User Response Sheet (50+)** | [Google Sheet](https://docs.google.com/spreadsheets/d/1rw8WcQs3iz_BmY_z_yFfbEfj65xqewDHztuzJZ9S9M0) |
 | **🐦 Twitter/X Launch Post** | [@StellarOrg tagging — post at launch](https://twitter.com/intent/tweet?text=Just+launched+the+Stellar+Contributor+Recognition+Platform+%40StellarOrg+%40soroban+%23Stellar+%23Soroban+%23BuildOnStellar&url=https://contributor-recognition-platform.vercel.app) |
 | **🎯 Pitch Deck** | Connect wallet → "Pitch Deck" tab |
 | **⚡ Fee Bump (Gasless)** | Connect wallet → "Fee Bump" tab |
+| **🚀 Growth & PMF** | Connect wallet → "Growth & PMF" tab |
 
 </div>
 
