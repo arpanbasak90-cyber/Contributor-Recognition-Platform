@@ -9,6 +9,9 @@ import { TransactionHistory } from './components/TransactionHistory';
 import { ContractEvents } from './components/ContractEvents';
 import { AnalyticsDashboard } from './components/AnalyticsDashboard';
 import { FeedbackWidget } from './components/FeedbackWidget';
+import { PitchDeck } from './components/PitchDeck';
+import { LeaderboardPanel } from './components/LeaderboardPanel';
+import { OnboardingModal } from './components/OnboardingModal';
 import {
   WalletState,
   TransactionRecord,
@@ -17,8 +20,7 @@ import {
   fetchXlmBalance
 } from './services/stellar';
 import { trackEvent, initSession } from './services/analytics';
-import { Award, Send, History, Sparkles, Info, Activity, BarChart2 } from 'lucide-react';
-
+import { Award, Send, History, Sparkles, Activity, BarChart2, Rocket, Trophy } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -37,7 +39,8 @@ export const App: React.FC = () => {
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [selectedRecipient, setSelectedRecipient] = useState<{ name: string; publicKey: string } | null>(null);
-  const [activeTab, setActiveTab] = useState<'leaderboard' | 'tip' | 'events' | 'history' | 'analytics'>('leaderboard');
+  const [activeTab, setActiveTab] = useState<'leaderboard' | 'globalboard' | 'tip' | 'events' | 'history' | 'analytics' | 'pitch'>('leaderboard');
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   // Initialize session analytics on mount
   useEffect(() => { initSession(); }, []);
@@ -61,6 +64,12 @@ export const App: React.FC = () => {
     setWalletState(newState);
     if (newState.connected && newState.provider) {
       trackEvent('WALLET_CONNECTED', { provider: newState.provider });
+      // Show onboarding modal for first-time users
+      const hasOnboarded = localStorage.getItem('stellar_crp_onboarded');
+      if (!hasOnboarded) {
+        setShowOnboarding(true);
+        localStorage.setItem('stellar_crp_onboarded', 'true');
+      }
     }
   };
 
@@ -161,6 +170,14 @@ export const App: React.FC = () => {
         onWalletConnected={handleWalletConnected}
       />
 
+      {/* Onboarding Modal — fires on first wallet connect */}
+      {showOnboarding && walletState.publicKey && (
+        <OnboardingModal
+          walletAddress={walletState.publicKey}
+          onClose={() => setShowOnboarding(false)}
+        />
+      )}
+
       {/* Main Content: Wallet Gated */}
       <main className="container" style={{ flex: 1, padding: '2rem 1.5rem' }}>
         {!walletState.connected ? (
@@ -172,13 +189,6 @@ export const App: React.FC = () => {
         ) : (
           /* Main Platform Dashboard shown AFTER connecting wallet */
           <div className="animate-slide-up">
-            {/* Banner Alert */}
-            <div className="alert-box alert-info" style={{ marginBottom: '1.5rem' }}>
-              <Info size={20} style={{ flexShrink: 0 }} />
-              <div>
-                <strong>Connected to {network.toUpperCase()}:</strong> Accessing Stellar REST APIs, Soroban Smart Contracts, live balance fetching, and real-time transaction logging.
-              </div>
-            </div>
 
             {/* Wallet Overview & Faucet Card */}
             <WalletCard
@@ -188,47 +198,29 @@ export const App: React.FC = () => {
 
             {/* Navigation Tabs */}
             <div className="tabs-header">
-              <button
-                className={`tab-btn ${activeTab === 'leaderboard' ? 'active' : ''}`}
-                onClick={() => handleTabChange('leaderboard')}
-                id="tab-leaderboard"
-              >
-                <Award size={18} /> Contributors ({contributors.length})
+              <button className={`tab-btn ${activeTab === 'leaderboard' ? 'active' : ''}`} onClick={() => handleTabChange('leaderboard')} id="tab-leaderboard">
+                <Award size={18} /> My Contributors ({contributors.length})
               </button>
-
-              <button
-                className={`tab-btn ${activeTab === 'tip' ? 'active' : ''}`}
-                onClick={() => handleTabChange('tip')}
-                id="tab-tip"
-              >
+              <button className={`tab-btn ${activeTab === 'globalboard' ? 'active' : ''}`} onClick={() => handleTabChange('globalboard')} id="tab-globalboard">
+                <Trophy size={18} /> Leaderboard
+              </button>
+              <button className={`tab-btn ${activeTab === 'tip' ? 'active' : ''}`} onClick={() => handleTabChange('tip')} id="tab-tip">
                 <Send size={18} /> Send Reward
                 {selectedRecipient && (
                   <span className="badge badge-cyan" style={{ fontSize: '0.65rem' }}>Selected</span>
                 )}
               </button>
-
-              <button
-                className={`tab-btn ${activeTab === 'events' ? 'active' : ''}`}
-                onClick={() => handleTabChange('events')}
-                id="tab-events"
-              >
+              <button className={`tab-btn ${activeTab === 'events' ? 'active' : ''}`} onClick={() => handleTabChange('events')} id="tab-events">
                 <Activity size={18} /> Contract Events
               </button>
-
-              <button
-                className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`}
-                onClick={() => handleTabChange('history')}
-                id="tab-history"
-              >
+              <button className={`tab-btn ${activeTab === 'history' ? 'active' : ''}`} onClick={() => handleTabChange('history')} id="tab-history">
                 <History size={18} /> Tx Log ({transactions.length})
               </button>
-
-              <button
-                className={`tab-btn ${activeTab === 'analytics' ? 'active' : ''}`}
-                onClick={() => handleTabChange('analytics')}
-                id="tab-analytics"
-              >
+              <button className={`tab-btn ${activeTab === 'analytics' ? 'active' : ''}`} onClick={() => handleTabChange('analytics')} id="tab-analytics">
                 <BarChart2 size={18} /> Analytics
+              </button>
+              <button className={`tab-btn ${activeTab === 'pitch' ? 'active' : ''}`} onClick={() => handleTabChange('pitch')} id="tab-pitch">
+                <Rocket size={18} /> Pitch Deck
               </button>
             </div>
 
@@ -241,7 +233,7 @@ export const App: React.FC = () => {
                 onSelectContributor={handleSelectContributor}
               />
             )}
-
+            {activeTab === 'globalboard' && <LeaderboardPanel />}
             {activeTab === 'tip' && (
               <TippingForm
                 walletState={walletState}
@@ -249,21 +241,15 @@ export const App: React.FC = () => {
                 onTransactionComplete={handleTransactionComplete}
               />
             )}
-
-            {activeTab === 'events' && (
-              <ContractEvents />
-            )}
-
+            {activeTab === 'events' && <ContractEvents />}
             {activeTab === 'history' && (
               <TransactionHistory
                 transactions={transactions}
                 onClearHistory={handleClearHistory}
               />
             )}
-
-            {activeTab === 'analytics' && (
-              <AnalyticsDashboard />
-            )}
+            {activeTab === 'analytics' && <AnalyticsDashboard />}
+            {activeTab === 'pitch' && <PitchDeck />}
           </div>
         )}
       </main>
@@ -284,7 +270,7 @@ export const App: React.FC = () => {
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             Built on <strong>Stellar Blockchain</strong> • Open Source Contributor Platform
-            <span style={{ marginLeft: '0.75rem', background: 'rgba(52,211,153,0.15)', border: '1px solid rgba(52,211,153,0.3)', borderRadius: '999px', padding: '0.1rem 0.55rem', fontSize: '0.72rem', fontWeight: 700, color: 'var(--accent-green)' }}>🟢 Level 4 MVP</span>
+            <span style={{ marginLeft: '0.75rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.3)', borderRadius: '999px', padding: '0.1rem 0.55rem', fontSize: '0.72rem', fontWeight: 700, color: 'var(--accent-cyan)' }}>🔵 Level 5 Growth</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
             Powered by <Sparkles size={14} color="var(--primary)" /> <strong>Soroban Smart Contracts & Stellar API</strong>
