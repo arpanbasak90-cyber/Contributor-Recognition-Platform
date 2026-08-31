@@ -70,10 +70,10 @@ export const AnalyticsDashboard: React.FC = () => {
                 fontSize: '0.68rem',
                 fontWeight: 700,
                 color: 'var(--accent-green)'
-              }}>?? Level 4 Production</span>
+              }}>ðŸŸ¢ Production Active</span>
             </div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', opacity: 0.85 }}>
-              Real-time session analytics powered by local event tracking • Session started: {formatDate(summary.sessionStart)}
+              Real-time session analytics powered by local event tracking â€¢ Session started: {formatDate(summary.sessionStart)}
             </p>
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -187,7 +187,7 @@ export const AnalyticsDashboard: React.FC = () => {
               style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1rem', background: 'var(--bg-inner-box)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-sm)', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 700, transition: 'all 0.15s ease' }}
             >
               <CheckCircle2 size={15} color="var(--accent-green)" />
-              Responses Sheet — 20+ Mainnet Users
+              Responses Sheet â€” 20+ Mainnet Users
               <ExternalLink size={13} style={{ marginLeft: 'auto' }} />
             </a>
           </div>
@@ -226,7 +226,7 @@ export const AnalyticsDashboard: React.FC = () => {
           )}
 
           <div style={{ marginTop: '1.25rem', padding: '0.75rem', background: 'var(--bg-inner-box)', borderRadius: 'var(--radius-sm)', fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-            <strong>Supported wallets:</strong> Freighter · Albedo · xBull · Rabet
+            <strong>Supported wallets:</strong> Freighter Â· Albedo Â· xBull Â· Rabet
           </div>
         </div>
       </div>
@@ -246,7 +246,7 @@ export const AnalyticsDashboard: React.FC = () => {
         ) : (
           <div className="activity-feed">
             {summary.recentEvents.map((evt: AnalyticsEvent) => {
-              const info = EVENT_LABELS[evt.type] || { label: evt.type, color: 'var(--text-muted)', icon: '•' };
+              const info = EVENT_LABELS[evt.type] || { label: evt.type, color: 'var(--text-muted)', icon: 'â€¢' };
               return (
                 <div key={evt.id} className="activity-item">
                   <div style={{ fontSize: '1.1rem', flexShrink: 0 }}>{info.icon}</div>
@@ -312,3 +312,4 @@ export const AnalyticsDashboard: React.FC = () => {
     </div>
   );
 };
+

@@ -60,7 +60,7 @@ export const WalletGate: React.FC<WalletGateProps> = ({ onOpenWalletModal, onDem
             </div>
 
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(52,211,153,0.15)', border: '1px solid rgba(52,211,153,0.3)', borderRadius: '999px', padding: '0.25rem 0.8rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-green)', marginBottom: '1rem' }}>
-              🟢 Level 4 Production MVP • Stellar Testnet
+              🟢 Stellar Testnet
             </div>
 
             <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.85rem', letterSpacing: '-0.03em' }}>

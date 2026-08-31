@@ -1,5 +1,5 @@
 ﻿/**
- * Analytics Service — Level 4 Production Monitoring
+ * Analytics Service — Production Monitoring
  * Lightweight localStorage-based event tracking for wallet connections,
  * tip events, page views, and user sessions.
  */
@@ -129,3 +129,4 @@ export function clearAnalytics(): void {
     // ignore
   }
 }
+

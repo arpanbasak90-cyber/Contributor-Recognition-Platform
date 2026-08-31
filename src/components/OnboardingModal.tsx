@@ -64,7 +64,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ walletAddress,
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.5rem" }}>
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "rgba(56,189,248,0.15)", border: "1px solid rgba(56,189,248,0.3)", borderRadius: "999px", padding: "0.2rem 0.65rem", fontSize: "0.72rem", fontWeight: 700, color: "var(--accent-cyan)", marginBottom: "0.5rem" }}>
-              🔵 Level 5 — User Onboarding
+              ✨ User Onboarding
             </div>
             <h2 style={{ fontSize: "1.3rem", fontWeight: 800, letterSpacing: "-0.02em" }}>
               {step === "submitted" ? "Welcome Aboard! 🎉" : "Join the Platform"}
@@ -166,3 +166,4 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({ walletAddress,
     </div>
   );
 };
+

@@ -56,7 +56,7 @@ export const LeaderboardPanel: React.FC = () => {
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
             <Trophy size={22} color="#FBBF24" />
             <h2 style={{ fontSize: "1.25rem", fontWeight: 800 }}>Global Contributor Leaderboard</h2>
-            <span style={{ background: "rgba(251,191,36,0.2)", border: "1px solid rgba(251,191,36,0.4)", borderRadius: "999px", padding: "0.15rem 0.6rem", fontSize: "0.7rem", fontWeight: 700, color: "#FBBF24" }}>🔵 Level 5</span>
+            <span style={{ background: "rgba(251,191,36,0.2)", border: "1px solid rgba(251,191,36,0.4)", borderRadius: "999px", padding: "0.15rem 0.6rem", fontSize: "0.7rem", fontWeight: 700, color: "#FBBF24" }}>🏆 Leaderboard</span>
           </div>
           <div style={{ display: "flex", background: "var(--bg-input)", borderRadius: "var(--radius-sm)", padding: "0.25rem", gap: "0.25rem" }}>
             {(["leaders", "activity"] as const).map(s => (
@@ -150,3 +150,4 @@ export const LeaderboardPanel: React.FC = () => {
     </div>
   );
 };
+

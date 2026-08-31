@@ -172,7 +172,7 @@ export const App: React.FC = () => {
         onWalletConnected={handleWalletConnected}
       />
 
-      {/* Onboarding Modal — fires on first wallet connect */}
+      {/* Onboarding Modal â€” fires on first wallet connect */}
       {showOnboarding && walletState.publicKey && (
         <OnboardingModal
           walletAddress={walletState.publicKey}
@@ -279,8 +279,8 @@ export const App: React.FC = () => {
       }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            Built on <strong>Stellar Blockchain</strong> • Open Source Contributor Platform
-            <span style={{ marginLeft: '0.75rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.3)', borderRadius: '999px', padding: '0.1rem 0.55rem', fontSize: '0.72rem', fontWeight: 700, color: 'var(--accent-cyan)' }}>🔵 Level 5 Growth</span>
+            Built on <strong>Stellar Blockchain</strong> â€¢ Open Source Contributor Platform
+            <span style={{ marginLeft: '0.75rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.3)', borderRadius: '999px', padding: '0.1rem 0.55rem', fontSize: '0.72rem', fontWeight: 700, color: 'var(--accent-cyan)' }}>🟢 Production App</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
             Powered by <Sparkles size={14} color="var(--primary)" /> <strong>Soroban Smart Contracts & Stellar API</strong>
@@ -292,3 +292,4 @@ export const App: React.FC = () => {
 };
 
 export default App;
+

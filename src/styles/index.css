@@ -1,6 +1,6 @@
-/* =============================================
+﻿/* =============================================
    STELLAR CONTRIBUTOR RECOGNITION PLATFORM
-   Level 4 Production CSS — Enhanced Design System
+   Production CSS â€” Enhanced Design System
    ============================================= */
 
 /* Theme Variables */
@@ -678,3 +678,4 @@ h1, h2, h3, h4, h5, h6, p, span, div, label, button, input, select, textarea, a 
   .toast { min-width: unset; max-width: 100%; }
   .feedback-fab { bottom: 1rem; right: 1rem; }
 }
+

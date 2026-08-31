@@ -38,7 +38,7 @@ export const PitchDeck: React.FC = () => {
       content: (
         <div style={{ textAlign: "center" }}>
           <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", flexWrap: "wrap", marginBottom: "2rem" }}>
-            {[["🟢", "Level 4 MVP"], ["⭐", "Soroban dApp"], ["👥", "50+ Users"], ["🔗", "Stellar Testnet"]].map(([icon, label]) => (
+            {[["🟢", "Soroban MVP"], ["⭐", "Soroban dApp"], ["👥", "50+ Users"], ["🔗", "Stellar Testnet"]].map(([icon, label]) => (
               <div key={label} style={{ background: "rgba(139,92,246,0.2)", border: "1px solid rgba(139,92,246,0.4)", borderRadius: "12px", padding: "1rem 1.5rem", textAlign: "center" }}>
                 <div style={{ fontSize: "1.8rem", marginBottom: "0.4rem" }}>{icon}</div>
                 <div style={{ fontSize: "0.85rem", fontWeight: 700 }}>{label}</div>
@@ -243,7 +243,7 @@ export const PitchDeck: React.FC = () => {
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
           <Rocket size={20} color="var(--primary)" />
           <h2 style={{ fontSize: "1.1rem", fontWeight: 800 }}>Pitch Deck</h2>
-          <span style={{ background: "rgba(56,189,248,0.15)", border: "1px solid rgba(56,189,248,0.3)", borderRadius: "999px", padding: "0.15rem 0.6rem", fontSize: "0.7rem", fontWeight: 700, color: "var(--accent-cyan)" }}>🔵 Level 5</span>
+          <span style={{ background: "rgba(56,189,248,0.15)", border: "1px solid rgba(56,189,248,0.3)", borderRadius: "999px", padding: "0.15rem 0.6rem", fontSize: "0.7rem", fontWeight: 700, color: "var(--accent-cyan)" }}>🚀 Pitch Deck</span>
         </div>
         <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
           <span style={{ fontSize: "0.82rem", color: "var(--text-muted)", fontWeight: 600 }}>Slide {current + 1} / {slides.length}</span>
@@ -303,3 +303,4 @@ export const PitchDeck: React.FC = () => {
     </div>
   );
 };
+

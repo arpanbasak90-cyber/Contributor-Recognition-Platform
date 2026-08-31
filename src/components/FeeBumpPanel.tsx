@@ -60,7 +60,7 @@ export const FeeBumpPanel: React.FC = () => {
             <h2 style={{ fontSize: "1.15rem", fontWeight: 800 }}>Fee Sponsorship — Gasless Transactions</h2>
             <p style={{ fontSize: "0.8rem", color: "var(--text-muted)", opacity: 0.85 }}>Advanced Feature: Stellar Fee Bump Transactions (SEP standard)</p>
           </div>
-          <span style={{ marginLeft: "auto", background: "rgba(139,92,246,0.2)", border: "1px solid rgba(139,92,246,0.4)", borderRadius: "999px", padding: "0.2rem 0.7rem", fontSize: "0.7rem", fontWeight: 700, color: "#8B5CF6" }}>⚫ Black Belt</span>
+          <span style={{ marginLeft: "auto", background: "rgba(139,92,246,0.2)", border: "1px solid rgba(139,92,246,0.4)", borderRadius: "999px", padding: "0.2rem 0.7rem", fontSize: "0.7rem", fontWeight: 700, color: "#8B5CF6" }}>⚡ Fee Sponsorship</span>
         </div>
       </div>
 
@@ -188,3 +188,4 @@ export const FeeBumpPanel: React.FC = () => {
     </div>
   );
 };
+
