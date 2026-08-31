@@ -12,6 +12,7 @@ import { FeedbackWidget } from './components/FeedbackWidget';
 import { PitchDeck } from './components/PitchDeck';
 import { LeaderboardPanel } from './components/LeaderboardPanel';
 import { OnboardingModal } from './components/OnboardingModal';
+import { FeeBumpPanel } from './components/FeeBumpPanel';
 import {
   WalletState,
   TransactionRecord,
@@ -20,7 +21,7 @@ import {
   fetchXlmBalance
 } from './services/stellar';
 import { trackEvent, initSession } from './services/analytics';
-import { Award, Send, History, Sparkles, Activity, BarChart2, Rocket, Trophy } from 'lucide-react';
+import { Award, Send, History, Sparkles, Activity, BarChart2, Rocket, Trophy, Zap } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
@@ -39,7 +40,7 @@ export const App: React.FC = () => {
   const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [contributors, setContributors] = useState<Contributor[]>([]);
   const [selectedRecipient, setSelectedRecipient] = useState<{ name: string; publicKey: string } | null>(null);
-  const [activeTab, setActiveTab] = useState<'leaderboard' | 'globalboard' | 'tip' | 'events' | 'history' | 'analytics' | 'pitch'>('leaderboard');
+  const [activeTab, setActiveTab] = useState<'leaderboard' | 'globalboard' | 'tip' | 'events' | 'history' | 'analytics' | 'pitch' | 'feebump'>('leaderboard');
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   // Initialize session analytics on mount
@@ -219,6 +220,9 @@ export const App: React.FC = () => {
               <button className={`tab-btn ${activeTab === 'analytics' ? 'active' : ''}`} onClick={() => handleTabChange('analytics')} id="tab-analytics">
                 <BarChart2 size={18} /> Analytics
               </button>
+              <button className={`tab-btn ${activeTab === 'feebump' ? 'active' : ''}`} onClick={() => handleTabChange('feebump')} id="tab-feebump">
+                <Zap size={18} /> Fee Bump
+              </button>
               <button className={`tab-btn ${activeTab === 'pitch' ? 'active' : ''}`} onClick={() => handleTabChange('pitch')} id="tab-pitch">
                 <Rocket size={18} /> Pitch Deck
               </button>
@@ -249,6 +253,7 @@ export const App: React.FC = () => {
               />
             )}
             {activeTab === 'analytics' && <AnalyticsDashboard />}
+            {activeTab === 'feebump' && <FeeBumpPanel />}
             {activeTab === 'pitch' && <PitchDeck />}
           </div>
         )}
